@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb_movie_app_riverpod/src/api/movies_repository.dart';
-import 'package:tmdb_movie_app_riverpod/src/models/search_data.dart';
 import 'package:tmdb_movie_app_riverpod/src/ui/movie_list_tile.dart';
 import 'package:tmdb_movie_app_riverpod/src/ui/movie_list_tile_shimmer.dart';
 import 'package:tmdb_movie_app_riverpod/src/ui/search_bar.dart';
@@ -16,7 +15,7 @@ class SearchPage extends ConsumerWidget {
     final query = ref.watch(searchTextProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Movies Search'),
+        title: const Text('TMDB Movies Search'),
       ),
       body: Column(
         children: [
@@ -25,11 +24,13 @@ class SearchPage extends ConsumerWidget {
             child: RefreshIndicator(
               onRefresh: () {
                 // disposes the pages previously fetched. Next read will refresh them
-                ref.invalidate(
-                    fetchMoviesProvider(SearchData(page: 1, query: query)));
+                // TODO: How to dispose data for all pages?
+                ref.invalidate(fetchMoviesProvider(
+                    MoviesPagination(page: 1, query: query)));
                 // keep showing the progress indicator until the first page is fetched
                 return ref.read(
-                  fetchMoviesProvider(SearchData(page: 1, query: query)).future,
+                  fetchMoviesProvider(MoviesPagination(page: 1, query: query))
+                      .future,
                 );
               },
               child: ListView.custom(
@@ -41,7 +42,8 @@ class SearchPage extends ConsumerWidget {
                   // Note that ref.watch is called for up to pageSize items
                   // with the same page and query arguments (but this is ok since data is cached)
                   final moviesList = ref.watch(
-                    fetchMoviesProvider(SearchData(page: page, query: query)),
+                    fetchMoviesProvider(
+                        MoviesPagination(page: page, query: query)),
                   );
 
                   return moviesList.when(

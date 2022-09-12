@@ -28,9 +28,9 @@ class _SearchBarState extends ConsumerState<SearchBar> {
       child: Center(
         child: Container(
           margin: const EdgeInsets.symmetric(vertical: 16, horizontal: 32),
-          decoration: const BoxDecoration(
-            color: Color(0xff35404d),
-            borderRadius: BorderRadius.all(Radius.circular(50)),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade900,
+            borderRadius: const BorderRadius.all(Radius.circular(50)),
           ),
           child: Padding(
             padding: const EdgeInsets.only(left: 10),

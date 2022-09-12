@@ -96,6 +96,7 @@ class _Poster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // TODO: Use CachedNetworkImage
     if (imagePath != null) {
       return FadeInImage.memoryNetwork(
         placeholder: kTransparentImage,
