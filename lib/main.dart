@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_movie_app_riverpod/src/ui/now_playing/now_playing_page.dart';
+import 'package:tmdb_movie_app_riverpod/src/ui/search_page.dart';
 
 void main() {
   runApp(const ProviderScope(child: MyApp()));
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.dark(),
-      home: const NowPlayingPage(),
+      home: const SearchPage(),
     );
   }
 }
