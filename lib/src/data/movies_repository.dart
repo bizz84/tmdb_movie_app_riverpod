@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_movie_app_riverpod/src/data/api_keys.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/dio_provider.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movies_response.dart';
 
 class MoviesRepository {
-  MoviesRepository({required this.client});
+  MoviesRepository({required this.client, required this.apiKey});
   final Dio client;
+  final String apiKey;
 
   Future<List<TMDBMovieBasic>> searchMovies(
       {required int page, String query = '', CancelToken? cancelToken}) async {
@@ -16,7 +17,7 @@ class MoviesRepository {
       host: 'api.themoviedb.org',
       path: '3/search/movie',
       queryParameters: {
-        'api_key': tmdbApiKey,
+        'api_key': apiKey,
         'include_adult': 'false',
         'page': '$page',
         'query': query,
@@ -34,7 +35,7 @@ class MoviesRepository {
       host: 'api.themoviedb.org',
       path: '3/movie/now_playing',
       queryParameters: {
-        'api_key': tmdbApiKey,
+        'api_key': apiKey,
         'include_adult': 'false',
         'page': '$page',
       },
@@ -48,6 +49,7 @@ class MoviesRepository {
 final fetchMoviesRepositoryProvider = Provider<MoviesRepository>((ref) {
   return MoviesRepository(
     client: ref.watch(dioProvider),
+    apiKey: dotenv.env['TMDB_KEY']!,
   );
 });
 
