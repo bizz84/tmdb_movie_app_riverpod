@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tmdb_movie_app_riverpod/src/api/tmdb_poster.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:tmdb_movie_app_riverpod/src/models/tmdb/tmdb_poster.dart';
 import 'package:tmdb_movie_app_riverpod/src/models/tmdb/tmdb_movie_basic.dart';
 import 'package:tmdb_movie_app_riverpod/src/ui/top_gradient.dart';
-import 'package:transparent_image/transparent_image.dart';
+
+const posterWidth = 154.0;
+const posterHeight = 231.0;
 
 class MovieListTile extends StatelessWidget {
   const MovieListTile({
@@ -16,30 +20,6 @@ class MovieListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return ListTile(
-    //   leading: Stack(
-    //     children: [
-    //       SizedBox(
-    //         width: 154,
-    //         height: 208,
-    //         child: _Poster(imagePath: movie.posterPath),
-    //       ),
-    //       if (debugIndex != null) ...[
-    //         const Positioned.fill(child: TopGradient()),
-    //         Positioned(
-    //           left: 8,
-    //           top: 8,
-    //           child: Text(
-    //             '$debugIndex',
-    //             style: const TextStyle(color: Colors.white, fontSize: 14),
-    //           ),
-    //         ),
-    //       ]
-    //     ],
-    //   ),
-    //   title: Text(movie.title),
-    //   subtitle: Text('Released: ${movie.releaseDate}'),
-    // );
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
       child: Row(
@@ -47,8 +27,8 @@ class MovieListTile extends StatelessWidget {
           Stack(
             children: [
               SizedBox(
-                width: 154,
-                height: 208,
+                width: posterWidth,
+                height: posterHeight,
                 child: _Poster(imagePath: movie.posterPath),
               ),
               if (debugIndex != null) ...[
@@ -71,10 +51,6 @@ class MovieListTile extends StatelessWidget {
               children: [
                 Text(
                   movie.title,
-                  // https://stackoverflow.com/questions/69059755/flutter-listview-text-show-on-multiline-if-overflow
-                  maxLines: 3,
-                  softWrap: true,
-                  overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 if (movie.releaseDate != null) ...[
@@ -96,17 +72,23 @@ class _Poster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: Use CachedNetworkImage
     if (imagePath != null) {
-      return FadeInImage.memoryNetwork(
-        placeholder: kTransparentImage,
-        image: TMDBPoster.imageUrl(imagePath!, PosterSize.w154),
-        fit: BoxFit.fitWidth,
+      return CachedNetworkImage(
+        //fit: BoxFit.fitWidth,
+        imageUrl: TMDBPoster.imageUrl(imagePath!, PosterSize.w154),
+        placeholder: (_, __) => Shimmer.fromColors(
+          baseColor: Colors.black26,
+          highlightColor: Colors.black12,
+          child: Container(
+            width: posterWidth,
+            height: posterHeight,
+            color: Colors.black,
+          ),
+        ),
       );
     }
     return const Placeholder(
       color: Colors.black87,
     );
-    //Image.memory(kTransparentImage);
   }
 }

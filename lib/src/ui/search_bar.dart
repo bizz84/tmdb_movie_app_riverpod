@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+// StateProvider that can be watched by other widgets to obtain the
+// current search query.
 final searchTextProvider = StateProvider<String>((ref) {
   return '';
 });

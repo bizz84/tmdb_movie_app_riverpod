@@ -33,6 +33,7 @@ class SearchPage extends ConsumerWidget {
                       .future,
                 );
               },
+              // TODO: Limit item count to pagination results
               child: ListView.custom(
                 childrenDelegate: SliverChildBuilderDelegate((context, index) {
                   final page = index ~/ pageSize + 1;
