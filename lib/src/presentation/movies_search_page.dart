@@ -1,25 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_movie_app_riverpod/src/api/movies_repository.dart';
-import 'package:tmdb_movie_app_riverpod/src/ui/movie_list_tile.dart';
-import 'package:tmdb_movie_app_riverpod/src/ui/movie_list_tile_shimmer.dart';
-import 'package:tmdb_movie_app_riverpod/src/ui/search_bar.dart';
+import 'package:tmdb_movie_app_riverpod/src/data/movies_repository.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/movie_list_tile.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/movie_list_tile_shimmer.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/movies_search_bar.dart';
 
-class SearchPage extends ConsumerWidget {
-  const SearchPage({super.key});
+class MoviesSearchPage extends ConsumerWidget {
+  const MoviesSearchPage({super.key});
 
   static const pageSize = 20;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final query = ref.watch(searchTextProvider);
+    final query = ref.watch(moviesSearchTextProvider);
     return Scaffold(
       appBar: AppBar(
         title: const Text('TMDB Movies Search'),
       ),
       body: Column(
         children: [
-          const SearchBar(),
+          const MoviesSearchBar(),
           Expanded(
             child: RefreshIndicator(
               onRefresh: () {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tmdb_movie_app_riverpod/src/ui/movie_list_tile.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/movie_list_tile.dart';
 
 class MovieListTileShimmer extends StatelessWidget {
   const MovieListTileShimmer({super.key});

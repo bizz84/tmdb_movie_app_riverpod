@@ -25,10 +25,10 @@ extension TMDBMoviesResponseX on TMDBMoviesResponse {
   bool get isEmpty => !hasResults();
 
   bool hasResults() {
-    return results.length > 0;
+    return results.isNotEmpty;
   }
 
   bool hasErrors() {
-    return errors.length > 0;
+    return errors.isNotEmpty;
   }
 }

@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tmdb_movie_app_riverpod/src/models/tmdb/tmdb_poster.dart';
-import 'package:tmdb_movie_app_riverpod/src/models/tmdb/tmdb_movie_basic.dart';
-import 'package:tmdb_movie_app_riverpod/src/ui/top_gradient.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_poster.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/top_gradient.dart';
 
 const posterWidth = 154.0;
 const posterHeight = 231.0;
@@ -29,7 +29,7 @@ class MovieListTile extends StatelessWidget {
               SizedBox(
                 width: posterWidth,
                 height: posterHeight,
-                child: _Poster(imagePath: movie.posterPath),
+                child: _MoviePoster(imagePath: movie.posterPath),
               ),
               if (debugIndex != null) ...[
                 const Positioned.fill(child: TopGradient()),
@@ -66,8 +66,8 @@ class MovieListTile extends StatelessWidget {
   }
 }
 
-class _Poster extends StatelessWidget {
-  const _Poster({this.imagePath});
+class _MoviePoster extends StatelessWidget {
+  const _MoviePoster({this.imagePath});
   final String? imagePath;
 
   @override

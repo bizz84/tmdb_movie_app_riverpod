@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// A gradient class that can be used to improve contrast
+// when rendering some text stacked on top of a widget
 class TopGradient extends StatelessWidget {
   const TopGradient({super.key});
 

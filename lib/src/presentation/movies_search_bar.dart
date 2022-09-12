@@ -3,18 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 // StateProvider that can be watched by other widgets to obtain the
 // current search query.
-final searchTextProvider = StateProvider<String>((ref) {
+final moviesSearchTextProvider = StateProvider<String>((ref) {
   return '';
 });
 
-class SearchBar extends ConsumerStatefulWidget {
-  const SearchBar({Key? key}) : super(key: key);
+class MoviesSearchBar extends ConsumerStatefulWidget {
+  const MoviesSearchBar({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<SearchBar> createState() => _SearchBarState();
+  ConsumerState<MoviesSearchBar> createState() => _SearchBarState();
 }
 
-class _SearchBarState extends ConsumerState<SearchBar> {
+class _SearchBarState extends ConsumerState<MoviesSearchBar> {
   final _controller = TextEditingController();
 
   @override
@@ -55,8 +55,9 @@ class _SearchBarState extends ConsumerState<SearchBar> {
                       onEditingComplete: () {
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
-                      onChanged: (text) =>
-                          ref.read(searchTextProvider.notifier).state = text,
+                      onChanged: (text) => ref
+                          .read(moviesSearchTextProvider.notifier)
+                          .state = text,
                     ),
                   ),
                 ),

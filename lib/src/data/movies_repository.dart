@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tmdb_movie_app_riverpod/src/api/api_keys.dart';
-import 'package:tmdb_movie_app_riverpod/src/api/dio_provider.dart';
-import 'package:tmdb_movie_app_riverpod/src/models/tmdb/tmdb_movie_basic.dart';
-import 'package:tmdb_movie_app_riverpod/src/models/tmdb/tmdb_movies_response.dart';
+import 'package:tmdb_movie_app_riverpod/src/data/api_keys.dart';
+import 'package:tmdb_movie_app_riverpod/src/data/dio_provider.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movies_response.dart';
 
 class MoviesRepository {
   MoviesRepository({required this.client});
