@@ -1,10 +1,16 @@
-GET https://api.themoviedb.org/3/movie/now_playing?api_key={{tmdb_key}}&include_adult=false&page=1 HTTP/1.1
+@BASE_URL=https://api.themoviedb.org/3
+
+GET {{BASE_URL}}/movie/now_playing?api_key={{tmdb_key}}
 User-Agent: rest-client
 Content-Type: application/json
 
 ###
 
-@QUERY="now"
-GET https://api.themoviedb.org/3/search/movie?api_key={{tmdb_key}}&language=en-US&page=1&include_adult=false&query={{QUERY}} HTTP/1.1
+@QUERY="Top Gun"
+@PAGE=1
+GET {{BASE_URL}}/search/movie?api_key={{tmdb_key}}&page={{PAGE}}&query={{QUERY}}
 User-Agent: rest-client
 Content-Type: application/json
+
+
+
