@@ -14,12 +14,7 @@ class ScaffoldWithBottomNavBar extends StatefulWidget {
 }
 
 class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
-  @override
-  void didUpdateWidget(ScaffoldWithBottomNavBar oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    //setState(() => _selectedIndex = widget.index);
-  }
-
+  // used for the currentIndex argument of BottomNavigationBar
   int _selectedIndex = 0;
 
   void _tap(BuildContext context, int index) {
@@ -27,7 +22,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
       // If the tab hasn't changed, do nothing
       return;
     }
-    setState(() => _selectedIndex = index); // used below
+    setState(() => _selectedIndex = index);
     if (index == 0) {
       // Note: this won't remember the previous state of the route
       // More info here:
