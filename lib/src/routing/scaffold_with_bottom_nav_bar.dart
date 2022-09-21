@@ -4,10 +4,8 @@ import 'package:tmdb_movie_app_riverpod/src/localization/string_hardcoded.dart';
 import 'package:tmdb_movie_app_riverpod/src/routing/app_router.dart';
 
 class ScaffoldWithBottomNavBar extends StatefulWidget {
-  const ScaffoldWithBottomNavBar({
-    Key? key,
-    required this.child,
-  }) : super(key: key);
+  const ScaffoldWithBottomNavBar({Key? key, required this.child})
+      : super(key: key);
   final Widget child;
 
   @override
@@ -25,8 +23,11 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
   int _selectedIndex = 0;
 
   void _tap(BuildContext context, int index) {
+    if (index == _selectedIndex) {
+      // If the tab hasn't changed, do nothing
+      return;
+    }
     setState(() => _selectedIndex = index); // used below
-
     if (index == 0) {
       // Note: this won't remember the previous state of the route
       // More info here:
@@ -55,7 +56,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
           ),
           BottomNavigationBarItem(
             icon: const Icon(Icons.favorite),
-            label: 'Cart'.hardcoded,
+            label: 'Favorites'.hardcoded,
           ),
         ],
         onTap: (index) => _tap(context, index),
