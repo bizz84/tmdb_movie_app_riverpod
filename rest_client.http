@@ -14,3 +14,10 @@ Content-Type: application/json
 
 
 
+###
+
+@MOVIE_ID=978444
+
+GET {{BASE_URL}}/movie/{{MOVIE_ID}}?api_key={{tmdb_key}}
+User-Agent: rest-client
+Content-Type: application/json

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/movie_list_tile.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/common/movie_poster.dart';
 
 class MovieListTileShimmer extends StatelessWidget {
   const MovieListTileShimmer({super.key});
@@ -15,8 +15,8 @@ class MovieListTileShimmer extends StatelessWidget {
         child: Row(
           children: [
             Container(
-              width: posterWidth,
-              height: posterHeight,
+              width: MoviePoster.width,
+              height: MoviePoster.height,
               color: Colors.black,
             ),
             const SizedBox(width: 8),

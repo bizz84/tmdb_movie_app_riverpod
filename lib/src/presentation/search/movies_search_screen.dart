@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/movies_repository.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/movie_list_tile.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/movie_list_tile_shimmer.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/movies_search_bar.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/search/movie_list_tile.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/search/movie_list_tile_shimmer.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/search/movies_search_bar.dart';
+import 'package:tmdb_movie_app_riverpod/src/routing/app_router.dart';
 
-class MoviesSearchPage extends ConsumerWidget {
-  const MoviesSearchPage({super.key});
+class MoviesSearchScreen extends ConsumerWidget {
+  const MoviesSearchScreen({super.key});
 
   static const pageSize = 20;
 
@@ -46,7 +48,6 @@ class MoviesSearchPage extends ConsumerWidget {
                     fetchMoviesProvider(
                         MoviesPagination(page: page, query: query)),
                   );
-
                   return moviesList.when(
                     // TODO: Improve error handling
                     error: (err, stack) => Text('Error $err'),
@@ -59,6 +60,11 @@ class MoviesSearchPage extends ConsumerWidget {
                       return MovieListTile(
                         movie: movie,
                         debugIndex: index,
+                        onPressed: () => context.goNamed(
+                          AppRoute.movie.name,
+                          params: {'id': movie.id.toString()},
+                          extra: movie,
+                        ),
                       );
                     },
                   );

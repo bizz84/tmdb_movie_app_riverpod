@@ -44,6 +44,21 @@ class MoviesRepository {
     final movies = TMDBMoviesResponse.fromJson(response.data);
     return movies.results;
   }
+
+  Future<TMDBMovieBasic> movie(
+      {required int movieId, CancelToken? cancelToken}) async {
+    final url = Uri(
+      scheme: 'https',
+      host: 'api.themoviedb.org',
+      path: '3/movie/$movieId',
+      queryParameters: {
+        'api_key': apiKey,
+        'include_adult': 'false',
+      },
+    ).toString();
+    final response = await client.get(url);
+    return TMDBMovieBasic.fromJson(response.data);
+  }
 }
 
 final fetchMoviesRepositoryProvider = Provider<MoviesRepository>((ref) {
@@ -54,6 +69,14 @@ final fetchMoviesRepositoryProvider = Provider<MoviesRepository>((ref) {
 });
 
 class AbortedException implements Exception {}
+
+final movieProvider = FutureProvider.autoDispose
+    .family<TMDBMovieBasic, int>((ref, movieId) async {
+  final moviesRepo = ref.watch(fetchMoviesRepositoryProvider);
+  final cancelToken = CancelToken();
+  ref.onDispose(() => cancelToken.cancel());
+  return moviesRepo.movie(movieId: movieId, cancelToken: cancelToken);
+});
 
 final fetchMoviesProvider =
     FutureProvider.autoDispose.family<List<TMDBMovieBasic>, MoviesPagination>(

@@ -27,7 +27,7 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
       // Note: this won't remember the previous state of the route
       // More info here:
       // https://github.com/flutter/flutter/issues/99124
-      context.goNamed(AppRoute.search.name);
+      context.goNamed(AppRoute.movies.name);
     } else if (index == 1) {
       context.goNamed(AppRoute.favorites.name);
     }
