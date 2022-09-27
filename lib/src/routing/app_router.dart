@@ -30,26 +30,27 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         routes: [
           // Products
           GoRoute(
-              path: '/movies',
-              name: AppRoute.movies.name,
-              pageBuilder: (context, state) => NoTransitionPage(
+            path: '/movies',
+            name: AppRoute.movies.name,
+            pageBuilder: (context, state) => NoTransitionPage(
+              key: state.pageKey,
+              child: const MoviesSearchScreen(),
+            ),
+            routes: [
+              GoRoute(
+                path: ':id',
+                name: AppRoute.movie.name,
+                pageBuilder: (context, state) {
+                  final id = int.parse(state.params['id'] as String);
+                  final movie = state.extra as TMDBMovieBasic?;
+                  return MaterialPage(
                     key: state.pageKey,
-                    child: const MoviesSearchScreen(),
-                  ),
-              routes: [
-                GoRoute(
-                  path: ':id',
-                  name: AppRoute.movie.name,
-                  pageBuilder: (context, state) {
-                    final id = int.parse(state.params['id'] as String);
-                    final movie = state.extra as TMDBMovieBasic?;
-                    return MaterialPage(
-                      key: state.pageKey,
-                      child: MovieDetailsScreen(movieId: id, movie: movie),
-                    );
-                  },
-                )
-              ]),
+                    child: MovieDetailsScreen(movieId: id, movie: movie),
+                  );
+                },
+              )
+            ],
+          ),
           // Shopping Cart
           GoRoute(
             path: '/favorites',
