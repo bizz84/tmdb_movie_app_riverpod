@@ -17,18 +17,18 @@ class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
   // used for the currentIndex argument of BottomNavigationBar
   int _selectedIndex = 0;
 
-  void _tap(BuildContext context, int index) {
-    if (index == _selectedIndex) {
+  void _tap(BuildContext context, int tabIndex) {
+    if (tabIndex == _selectedIndex) {
       // If the tab hasn't changed, do nothing
       return;
     }
-    setState(() => _selectedIndex = index);
-    if (index == 0) {
+    setState(() => _selectedIndex = tabIndex);
+    if (tabIndex == 0) {
       // Note: this won't remember the previous state of the route
       // More info here:
       // https://github.com/flutter/flutter/issues/99124
       context.goNamed(AppRoute.movies.name);
-    } else if (index == 1) {
+    } else if (tabIndex == 1) {
       context.goNamed(AppRoute.favorites.name);
     }
   }
