@@ -39,7 +39,7 @@ dependencies:
   #sembast: ^3.1.0+2
   transparent_image: ^2.0.0
   dio: ^4.0.6
-  flutter_riverpod: ^2.0.0-dev.9
+  flutter_riverpod: ^2.0.1
   envied: ^0.2.3
   shimmer: ^2.0.0
   cached_network_image: ^3.2.2

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
@@ -78,42 +80,41 @@ final movieProvider = FutureProvider.autoDispose
   return moviesRepo.movie(movieId: movieId, cancelToken: cancelToken);
 });
 
-final fetchMoviesProvider =
-    FutureProvider.autoDispose.family<List<TMDBMovieBasic>, MoviesPagination>(
-  (ref, searchData) async {
-    final moviesRepo = ref.watch(fetchMoviesRepositoryProvider);
-    // Cancel the page request if the UI no longer needs it before the request
-    // is finished.
-    // This typically happen if the user scrolls very fast
-    // or if we type a different search term.
-    final cancelToken = CancelToken();
-    ref.onDispose(() => cancelToken.cancel());
+final fetchMoviesProvider = FutureProvider.autoDispose
+    .family<List<TMDBMovieBasic>, MoviesPagination>((ref, searchData) async {
+  final moviesRepo = ref.watch(fetchMoviesRepositoryProvider);
+  // Cancel the page request if the UI no longer needs it before the request
+  // is finished.
+  // This typically happen if the user scrolls very fast
+  // or if we type a different search term.
+  final cancelToken = CancelToken();
+  ref.onDispose(() => cancelToken.cancel());
+  // When a page is no-longer used, keep it in the cache.
+  final link = ref.keepAlive();
+  Timer(const Duration(seconds: 30), () {
+    link.close();
+  });
 
-    if (searchData.query.isEmpty) {
-      // use non-search endpoint
-      return moviesRepo.nowPlayingMovies(
-        page: searchData.page,
-        cancelToken: cancelToken,
-      );
-    } else {
-      // Debouncing the request. By having this delay, it leaves the opportunity
-      // for consumers to subscribe to a different `meta` parameters. In which
-      // case, this request will be aborted.
-      await Future.delayed(const Duration(milliseconds: 500));
-      if (cancelToken.isCancelled) throw AbortedException();
-      // use search endpoint
-      return moviesRepo.searchMovies(
-        page: searchData.page,
-        query: searchData.query,
-        cancelToken: cancelToken,
-      );
-    }
-  },
-  // When a page is no-longer use, keep it in the cache.
-  // After this point, if the list of characters is requested again, a new fetch
-  // will be performed.
-  cacheTime: const Duration(seconds: 30),
-);
+  if (searchData.query.isEmpty) {
+    // use non-search endpoint
+    return moviesRepo.nowPlayingMovies(
+      page: searchData.page,
+      cancelToken: cancelToken,
+    );
+  } else {
+    // Debouncing the request. By having this delay, it leaves the opportunity
+    // for consumers to subscribe to a different `meta` parameters. In which
+    // case, this request will be aborted.
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (cancelToken.isCancelled) throw AbortedException();
+    // use search endpoint
+    return moviesRepo.searchMovies(
+      page: searchData.page,
+      query: searchData.query,
+      cancelToken: cancelToken,
+    );
+  }
+});
 
 class MoviesPagination {
   MoviesPagination({required this.page, required this.query});
