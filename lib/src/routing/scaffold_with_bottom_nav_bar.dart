@@ -1,61 +1,59 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_movie_app_riverpod/src/localization/string_hardcoded.dart';
-import 'package:tmdb_movie_app_riverpod/src/routing/app_router.dart';
 
-class ScaffoldWithBottomNavBar extends StatefulWidget {
-  const ScaffoldWithBottomNavBar({Key? key, required this.child})
-      : super(key: key);
-  final Widget child;
+/// Representation of a tab item in a [ScaffoldWithNavBar]
+class ScaffoldWithNavBarTabItem extends BottomNavigationBarItem {
+  /// Constructs an [ScaffoldWithNavBarTabItem].
+  const ScaffoldWithNavBarTabItem(
+      {required this.navigationItem, required Widget icon, String? label})
+      : super(icon: icon, label: label);
 
-  @override
-  State<ScaffoldWithBottomNavBar> createState() =>
-      _ScaffoldWithBottomNavBarState();
+  /// The [StackedNavigationItem]
+  final StackedNavigationItem navigationItem;
+
+  /// Gets the associated navigator key
+  GlobalKey<NavigatorState> get navigatorKey => navigationItem.navigatorKey;
 }
 
-class _ScaffoldWithBottomNavBarState extends State<ScaffoldWithBottomNavBar> {
-  // used for the currentIndex argument of BottomNavigationBar
-  int _selectedIndex = 0;
+/// Builds the "shell" for the app by building a Scaffold with a
+/// BottomNavigationBar, where [child] is placed in the body of the Scaffold.
+class ScaffoldWithNavBar extends StatelessWidget {
+  /// Constructs an [ScaffoldWithNavBar].
+  const ScaffoldWithNavBar({
+    required this.currentIndex,
+    required this.itemsState,
+    required this.body,
+    required this.tabs,
+    Key? key,
+  }) : super(key: key ?? const ValueKey<String>('ScaffoldWithNavBar'));
 
-  void _tap(BuildContext context, int tabIndex) {
-    if (tabIndex == _selectedIndex) {
-      // If the tab hasn't changed, do nothing
-      return;
-    }
-    setState(() => _selectedIndex = tabIndex);
-    if (tabIndex == 0) {
-      // Note: this won't remember the previous state of the route
-      // More info here:
-      // https://github.com/flutter/flutter/issues/99124
-      context.goNamed(AppRoute.movies.name);
-    } else if (tabIndex == 1) {
-      context.goNamed(AppRoute.favorites.name);
-    }
-  }
+  /// Currently active tab index
+  final int currentIndex;
+
+  /// Route state
+  final List<StackedNavigationItemState> itemsState;
+
+  /// Body, i.e. the index stack
+  final Widget body;
+
+  /// The tabs
+  final List<ScaffoldWithNavBarTabItem> tabs;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.child,
+      body: body,
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        // TODO: figure out theming
-        unselectedItemColor: Colors.grey,
-        selectedItemColor: Colors.white,
-        currentIndex: _selectedIndex,
-        items: [
-          // products
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.search),
-            label: 'Search'.hardcoded,
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.favorite),
-            label: 'Favorites'.hardcoded,
-          ),
-        ],
-        onTap: (index) => _tap(context, index),
+        items: tabs,
+        currentIndex: currentIndex,
+        onTap: (int tappedIndex) =>
+            _onItemTapped(context, itemsState[tappedIndex]),
       ),
     );
+  }
+
+  void _onItemTapped(
+      BuildContext context, StackedNavigationItemState itemState) {
+    GoRouter.of(context).go(itemState.currentLocation);
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
+import 'package:tmdb_movie_app_riverpod/src/localization/string_hardcoded.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/movie/movie_details_screen.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/search/movies_search_screen.dart';
 import 'package:tmdb_movie_app_riverpod/src/routing/scaffold_with_bottom_nav_bar.dart';
@@ -14,7 +15,31 @@ enum AppRoute {
 
 // private navigators
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
-final _shellNavigatorKey = GlobalKey<NavigatorState>();
+
+final _moviesNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'moviesNav');
+final _favoritesNavigatorKey =
+    GlobalKey<NavigatorState>(debugLabel: 'favoritesNav');
+
+final _tabs = [
+  ScaffoldWithNavBarTabItem(
+    navigationItem: StackedNavigationItem(
+        rootRoutePath: '/movies', navigatorKey: _moviesNavigatorKey),
+    icon: const Icon(Icons.search),
+    label: 'Search'.hardcoded,
+  ),
+  ScaffoldWithNavBarTabItem(
+    navigationItem: StackedNavigationItem(
+        rootRoutePath: '/favorites', navigatorKey: _favoritesNavigatorKey),
+    icon: const Icon(Icons.favorite),
+    label: 'Favorites'.hardcoded,
+  ),
+  // ScaffoldWithNavBarTabItem(
+  //   navigationItem: StackedNavigationItem(
+  //       rootRoutePath: '/account', navigatorKey: _accountNavigatorKey),
+  //   icon: const Icon(Icons.person),
+  //   label: 'Account',
+  // ),
+];
 
 final goRouterProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -22,10 +47,18 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     routes: [
-      ShellRoute(
-        navigatorKey: _shellNavigatorKey,
-        builder: (context, state, child) {
-          return ScaffoldWithBottomNavBar(child: child);
+      PartitionedShellRoute.stackedNavigationShell(
+        stackItems: _tabs
+            .map((ScaffoldWithNavBarTabItem e) => e.navigationItem)
+            .toList(),
+        scaffoldBuilder: (BuildContext context, int currentIndex,
+            List<StackedNavigationItemState> itemsState, Widget scaffoldBody) {
+          return ScaffoldWithNavBar(
+            tabs: _tabs,
+            currentIndex: currentIndex,
+            itemsState: itemsState,
+            body: scaffoldBody,
+          );
         },
         routes: [
           // Products
