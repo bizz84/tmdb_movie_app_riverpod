@@ -430,7 +430,7 @@ packages:
     source: hosted
     version: "1.8.2"
   path_provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
@@ -535,7 +535,7 @@ packages:
     source: hosted
     version: "2.0.1"
   rxdart:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: rxdart
       url: "https://pub.dartlang.org"
