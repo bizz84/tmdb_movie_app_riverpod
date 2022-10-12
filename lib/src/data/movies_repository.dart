@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/cancel_token_ref.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/dio_provider.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movies_response.dart';
+
+part 'movies_repository.g.dart';
 
 class MoviesRepository {
   MoviesRepository({required this.client, required this.apiKey});
@@ -64,24 +66,30 @@ class MoviesRepository {
   }
 }
 
-final moviesRepositoryProvider = Provider<MoviesRepository>((ref) {
-  return MoviesRepository(
-    client: ref.watch(dioProvider),
-    apiKey: Env.tmdbApiKey,
-  );
-});
+@riverpod
+MoviesRepository moviesRepository(MoviesRepositoryRef ref) => MoviesRepository(
+      client: ref.watch(dioProvider),
+      apiKey: Env.tmdbApiKey,
+    );
 
 class AbortedException implements Exception {}
 
-final movieProvider =
-    FutureProvider.autoDispose.family<TMDBMovie, int>((ref, movieId) async {
-  final moviesRepo = ref.watch(moviesRepositoryProvider);
+@riverpod
+Future<TMDBMovie> movie(
+  MovieRef ref, {
+  required int movieId,
+}) async {
   final cancelToken = ref.cancelToken();
-  return moviesRepo.movie(movieId: movieId, cancelToken: cancelToken);
-});
+  return ref
+      .watch(moviesRepositoryProvider)
+      .movie(movieId: movieId, cancelToken: cancelToken);
+}
 
-final fetchMoviesProvider = FutureProvider.autoDispose
-    .family<List<TMDBMovie>, MoviesPagination>((ref, pagination) async {
+@riverpod
+Future<List<TMDBMovie>> fetchMovies(
+  FetchMoviesRef ref, {
+  required MoviesPagination pagination,
+}) async {
   final moviesRepo = ref.watch(moviesRepositoryProvider);
   // Cancel the page request if the UI no longer needs it.
   // This happens if the user scrolls very fast or if we type a different search
@@ -114,7 +122,7 @@ final fetchMoviesProvider = FutureProvider.autoDispose
       cancelToken: cancelToken,
     );
   }
-});
+}
 
 class MoviesPagination {
   MoviesPagination({required this.page, required this.query});

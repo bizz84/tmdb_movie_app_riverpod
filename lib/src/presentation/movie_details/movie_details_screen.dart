@@ -25,7 +25,7 @@ class MovieDetailsScreen extends ConsumerWidget {
         ),
       );
     } else {
-      final movieAsync = ref.watch(movieProvider(movieId));
+      final movieAsync = ref.watch(movieProvider(movieId: movieId));
       return movieAsync.when(
         error: (e, st) => Scaffold(
           appBar: AppBar(

@@ -29,8 +29,9 @@ class MoviesSearchScreen extends ConsumerWidget {
                 ref.invalidate(fetchMoviesProvider);
                 // keep showing the progress indicator until the first page is fetched
                 return ref.read(
-                  fetchMoviesProvider(MoviesPagination(page: 1, query: query))
-                      .future,
+                  fetchMoviesProvider(
+                    pagination: MoviesPagination(page: 1, query: query),
+                  ).future,
                 );
               },
               // TODO: Limit item count to pagination results
@@ -44,7 +45,7 @@ class MoviesSearchScreen extends ConsumerWidget {
                   // with the same page and query arguments (but this is ok since data is cached)
                   final moviesList = ref.watch(
                     fetchMoviesProvider(
-                        MoviesPagination(page: page, query: query)),
+                        pagination: MoviesPagination(page: page, query: query)),
                   );
                   return moviesList.when(
                     // TODO: Improve error handling
