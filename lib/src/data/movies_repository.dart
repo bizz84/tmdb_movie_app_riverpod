@@ -64,7 +64,7 @@ class MoviesRepository {
   }
 }
 
-final fetchMoviesRepositoryProvider = Provider<MoviesRepository>((ref) {
+final moviesRepositoryProvider = Provider<MoviesRepository>((ref) {
   return MoviesRepository(
     client: ref.watch(dioProvider),
     apiKey: Env.tmdbApiKey,
@@ -75,14 +75,14 @@ class AbortedException implements Exception {}
 
 final movieProvider = FutureProvider.autoDispose
     .family<TMDBMovieBasic, int>((ref, movieId) async {
-  final moviesRepo = ref.watch(fetchMoviesRepositoryProvider);
+  final moviesRepo = ref.watch(moviesRepositoryProvider);
   final cancelToken = ref.cancelToken();
   return moviesRepo.movie(movieId: movieId, cancelToken: cancelToken);
 });
 
 final fetchMoviesProvider = FutureProvider.autoDispose
-    .family<List<TMDBMovieBasic>, MoviesPagination>((ref, searchData) async {
-  final moviesRepo = ref.watch(fetchMoviesRepositoryProvider);
+    .family<List<TMDBMovieBasic>, MoviesPagination>((ref, pagination) async {
+  final moviesRepo = ref.watch(moviesRepositoryProvider);
   // Cancel the page request if the UI no longer needs it before the request
   // is finished.
   // This typically happen if the user scrolls very fast
@@ -94,10 +94,10 @@ final fetchMoviesProvider = FutureProvider.autoDispose
     link.close();
   });
 
-  if (searchData.query.isEmpty) {
+  if (pagination.query.isEmpty) {
     // use non-search endpoint
     return moviesRepo.nowPlayingMovies(
-      page: searchData.page,
+      page: pagination.page,
       cancelToken: cancelToken,
     );
   } else {
@@ -108,8 +108,8 @@ final fetchMoviesProvider = FutureProvider.autoDispose
     if (cancelToken.isCancelled) throw AbortedException();
     // use search endpoint
     return moviesRepo.searchMovies(
-      page: searchData.page,
-      query: searchData.query,
+      page: pagination.page,
+      query: pagination.query,
       cancelToken: cancelToken,
     );
   }
