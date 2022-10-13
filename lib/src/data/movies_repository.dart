@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
+import 'package:tmdb_movie_app_riverpod/src/data/cancel_token_ref.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/dio_provider.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movies_response.dart';
@@ -75,8 +76,7 @@ class AbortedException implements Exception {}
 final movieProvider = FutureProvider.autoDispose
     .family<TMDBMovieBasic, int>((ref, movieId) async {
   final moviesRepo = ref.watch(fetchMoviesRepositoryProvider);
-  final cancelToken = CancelToken();
-  ref.onDispose(() => cancelToken.cancel());
+  final cancelToken = ref.cancelToken();
   return moviesRepo.movie(movieId: movieId, cancelToken: cancelToken);
 });
 
@@ -87,8 +87,7 @@ final fetchMoviesProvider = FutureProvider.autoDispose
   // is finished.
   // This typically happen if the user scrolls very fast
   // or if we type a different search term.
-  final cancelToken = CancelToken();
-  ref.onDispose(() => cancelToken.cancel());
+  final cancelToken = ref.cancelToken();
   // When a page is no-longer used, keep it in the cache.
   final link = ref.keepAlive();
   Timer(const Duration(seconds: 30), () {
