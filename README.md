@@ -2,7 +2,7 @@
 
 This is an improved version of my [old movies app](https://github.com/bizz84/movie_app_state_management_flutter) based on the latest Riverpod 2.0 APIs.
 
-![Movies app preview](.github/images/movies-app-preview.png)
+<img src="https://github.com/bizz84/tmdb_movie_app_riverpod/blob/main/.github/images/movies-app-preview.png?raw=true" alt="Movies app preview" width=50% height=50%>
 
 ## Motivation
 
