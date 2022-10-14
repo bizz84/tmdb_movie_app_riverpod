@@ -1,16 +1,109 @@
-# tmdb_movie_app_riverpod
+# Flutter Movies app with Riverpod (TMDB API)
 
-A new Flutter project.
+This is an improved version of my [old movies app](https://github.com/bizz84/movie_app_state_management_flutter) based on the latest Riverpod 2.0 APIs.
 
-## Getting Started
+![Movies app preview](.github/images/movies-app-preview.png)
 
-This project is a starting point for a Flutter application.
+## Motivation
 
-A few resources to get you started if this is your first Flutter project:
+I built this app to showcase the **latest APIs** for popular packages such as Riverpod and GoRouter.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+This is not meant to be a complete movies app, yet it should implement common use cases and features. 👇
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Current Features
+
+- Infinite scrolling with pagination
+- Pull to refresh
+- Search functionality
+- Loading UI with the [Shimmer](https://pub.dev/packages/shimmer) package
+
+## Planned Features (no promises 😅)
+
+- Favourites
+- Stateful nested routing
+- Responsive UI
+
+## Packages in use
+
+- [flutter_riverpod](https://pub.dev/packages/riverpod) for data caching (and much more!)
+- [freezed](https://pub.dev/packages/freezed) for JSON serialization
+- [dio](https://pub.dev/packages/dio) for networking
+- [go_router](https://pub.dev/packages/go_router) for navigation
+- [shimmer](https://pub.dev/packages/shimmer) for the loading UI
+- [envied](https://pub.dev/packages/envied) for handling API keys
+- [cached_network_image](https://pub.dev/packages/cached_network_image) for caching images
+
+## Getting a TMDB API key
+
+This project uses the TMDB API to get the latest movies data.
+
+Before running the app you need to [sign up on the TMDB website](https://www.themoviedb.org/signup), then obtain an API key on the [settings API page](https://www.themoviedb.org/settings/api).
+
+Once you have this, create an `.env` file inside `packages/core/`, and add your key:
+
+```dart
+// .env
+TMDB_KEY=your-api-key
+```
+
+Then, run the code generator:
+
+```
+flutter pub run build_runner build --delete-conflicting-outputs
+```
+
+This will generate a `env.g.dart` file inside `packages/core/lib/api`, that is used when making requests to the TMDB API.
+
+Congratulations, you're good to go. 😎
+
+## Note: Loading images from insecure HTTP endpoints
+
+The data returned by the TMBD API points to image URLs using http rather than https. In order for images to load correctly, the following changes have been made:
+
+### Android
+
+Created a file at `android/app/src/main/res/xml/network_security_config.xml` with these contents:
+
+```
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>
+```
+
+Added this to the application tag in the `AndroidManifest.xml`:
+
+```
+android:networkSecurityConfig="@xml/network_security_config"
+```
+
+### iOS
+
+Add the following to `ios/Runner/info.pList`:
+
+```
+  <key>NSAppTransportSecurity</key>
+  <dict>
+      <key>NSAllowsArbitraryLoads</key>
+      <true/>
+  </dict>
+```
+
+More information here:
+
+- [Insecure HTTP connections are disabled by default on iOS and Android.](https://flutter.dev/docs/release/breaking-changes/network-policy-ios-android)
+
+### macOS
+
+Since macOS applications are sandboxed by default, we get a `SocketException` if we haven't added the required entitlements. This has been fixes by adding these lines to `macos/Runner/DebugProfile.entitlements` and `macos/Runner/Release.entitlements`:
+
+```
+<key>com.apple.security.network.client</key>
+<true/>
+```
+
+More info here:
+
+- [How to fix "SocketException: Connection failed (Operation not permitted)" with Flutter on macOS](https://codewithandrea.com/tips/socket-exception-connection-failed-macos/)
+
+## [LICENSE: MIT](LICENSE.md)
