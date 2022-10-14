@@ -78,7 +78,7 @@ class AbortedException implements Exception {}
 Future<TMDBMovie> movie(
   MovieRef ref, {
   required int movieId,
-}) async {
+}) {
   final cancelToken = ref.cancelToken();
   return ref
       .watch(moviesRepositoryProvider)
