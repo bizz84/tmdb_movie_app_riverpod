@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/common/movie_poster.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/common/top_gradient.dart';
 
@@ -11,7 +11,7 @@ class MovieListTile extends StatelessWidget {
     this.debugIndex,
     this.onPressed,
   });
-  final TMDBMovieBasic movie;
+  final TMDBMovie movie;
   final int? debugIndex;
   final VoidCallback? onPressed;
 

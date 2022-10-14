@@ -1,7 +1,7 @@
 library core;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'tmdb_movie_basic.dart';
+import 'tmdb_movie.dart';
 
 part 'tmdb_movies_response.freezed.dart';
 part 'tmdb_movies_response.g.dart';
@@ -10,7 +10,7 @@ part 'tmdb_movies_response.g.dart';
 class TMDBMoviesResponse with _$TMDBMoviesResponse {
   factory TMDBMoviesResponse({
     required int page,
-    required List<TMDBMovieBasic> results,
+    required List<TMDBMovie> results,
     @JsonKey(name: 'total_results') required int totalResults,
     @JsonKey(name: 'total_pages') required int totalPages,
     @Default([]) List<String> errors,

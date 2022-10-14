@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/movies_repository.dart';
-import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/search/movie_list_tile.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/search/movie_list_tile_shimmer.dart';
 
@@ -9,7 +9,7 @@ class MovieDetailsScreen extends ConsumerWidget {
   const MovieDetailsScreen(
       {super.key, required this.movieId, required this.movie});
   final int movieId;
-  final TMDBMovieBasic? movie;
+  final TMDBMovie? movie;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

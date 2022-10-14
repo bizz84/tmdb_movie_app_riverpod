@@ -25,10 +25,8 @@ class MoviesSearchScreen extends ConsumerWidget {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () {
-                // disposes the pages previously fetched. Next read will refresh them
-                // TODO: How to dispose data for all pages?
-                ref.invalidate(fetchMoviesProvider(
-                    MoviesPagination(page: 1, query: query)));
+                // disposes all the pages previously fetched. Next read will refresh them
+                ref.invalidate(fetchMoviesProvider);
                 // keep showing the progress indicator until the first page is fetched
                 return ref.read(
                   fetchMoviesProvider(MoviesPagination(page: 1, query: query))

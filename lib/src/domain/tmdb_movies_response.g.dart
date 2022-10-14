@@ -11,7 +11,7 @@ _$_TMDBMoviesResponse _$$_TMDBMoviesResponseFromJson(
     _$_TMDBMoviesResponse(
       page: json['page'] as int,
       results: (json['results'] as List<dynamic>)
-          .map((e) => TMDBMovieBasic.fromJson(e as Map<String, dynamic>))
+          .map((e) => TMDBMovie.fromJson(e as Map<String, dynamic>))
           .toList(),
       totalResults: json['total_results'] as int,
       totalPages: json['total_pages'] as int,

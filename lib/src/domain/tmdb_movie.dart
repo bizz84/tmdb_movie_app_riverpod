@@ -2,12 +2,12 @@ library core;
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'tmdb_movie_basic.freezed.dart';
-part 'tmdb_movie_basic.g.dart';
+part 'tmdb_movie.freezed.dart';
+part 'tmdb_movie.g.dart';
 
 @freezed
-class TMDBMovieBasic with _$TMDBMovieBasic {
-  factory TMDBMovieBasic({
+class TMDBMovie with _$TMDBMovie {
+  factory TMDBMovie({
     @JsonKey(name: 'vote_count') int? voteCount,
     required int id,
     @Default(false) bool video,
@@ -24,6 +24,6 @@ class TMDBMovieBasic with _$TMDBMovieBasic {
     @JsonKey(name: 'release_date') String? releaseDate,
   }) = _TMDBMovieBasic;
 
-  factory TMDBMovieBasic.fromJson(Map<String, dynamic> json) =>
-      _$TMDBMovieBasicFromJson(json);
+  factory TMDBMovie.fromJson(Map<String, dynamic> json) =>
+      _$TMDBMovieFromJson(json);
 }

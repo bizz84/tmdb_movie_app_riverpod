@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-TMDBMovieBasic _$TMDBMovieBasicFromJson(Map<String, dynamic> json) {
+TMDBMovie _$TMDBMovieFromJson(Map<String, dynamic> json) {
   return _TMDBMovieBasic.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TMDBMovieBasic {
+mixin _$TMDBMovie {
   @JsonKey(name: 'vote_count')
   int? get voteCount => throw _privateConstructorUsedError;
   int get id => throw _privateConstructorUsedError;
@@ -45,15 +45,14 @@ mixin _$TMDBMovieBasic {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TMDBMovieBasicCopyWith<TMDBMovieBasic> get copyWith =>
+  $TMDBMovieCopyWith<TMDBMovie> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TMDBMovieBasicCopyWith<$Res> {
-  factory $TMDBMovieBasicCopyWith(
-          TMDBMovieBasic value, $Res Function(TMDBMovieBasic) then) =
-      _$TMDBMovieBasicCopyWithImpl<$Res>;
+abstract class $TMDBMovieCopyWith<$Res> {
+  factory $TMDBMovieCopyWith(TMDBMovie value, $Res Function(TMDBMovie) then) =
+      _$TMDBMovieCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(name: 'vote_count') int? voteCount,
       int id,
@@ -72,13 +71,12 @@ abstract class $TMDBMovieBasicCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TMDBMovieBasicCopyWithImpl<$Res>
-    implements $TMDBMovieBasicCopyWith<$Res> {
-  _$TMDBMovieBasicCopyWithImpl(this._value, this._then);
+class _$TMDBMovieCopyWithImpl<$Res> implements $TMDBMovieCopyWith<$Res> {
+  _$TMDBMovieCopyWithImpl(this._value, this._then);
 
-  final TMDBMovieBasic _value;
+  final TMDBMovie _value;
   // ignore: unused_field
-  final $Res Function(TMDBMovieBasic) _then;
+  final $Res Function(TMDBMovie) _then;
 
   @override
   $Res call({
@@ -160,7 +158,7 @@ class _$TMDBMovieBasicCopyWithImpl<$Res>
 
 /// @nodoc
 abstract class _$$_TMDBMovieBasicCopyWith<$Res>
-    implements $TMDBMovieBasicCopyWith<$Res> {
+    implements $TMDBMovieCopyWith<$Res> {
   factory _$$_TMDBMovieBasicCopyWith(
           _$_TMDBMovieBasic value, $Res Function(_$_TMDBMovieBasic) then) =
       __$$_TMDBMovieBasicCopyWithImpl<$Res>;
@@ -184,7 +182,7 @@ abstract class _$$_TMDBMovieBasicCopyWith<$Res>
 
 /// @nodoc
 class __$$_TMDBMovieBasicCopyWithImpl<$Res>
-    extends _$TMDBMovieBasicCopyWithImpl<$Res>
+    extends _$TMDBMovieCopyWithImpl<$Res>
     implements _$$_TMDBMovieBasicCopyWith<$Res> {
   __$$_TMDBMovieBasicCopyWithImpl(
       _$_TMDBMovieBasic _value, $Res Function(_$_TMDBMovieBasic) _then)
@@ -341,7 +339,7 @@ class _$_TMDBMovieBasic implements _TMDBMovieBasic {
 
   @override
   String toString() {
-    return 'TMDBMovieBasic(voteCount: $voteCount, id: $id, video: $video, voteAverage: $voteAverage, title: $title, popularity: $popularity, posterPath: $posterPath, originalLanguage: $originalLanguage, originalTitle: $originalTitle, genreIds: $genreIds, backdropPath: $backdropPath, adult: $adult, overview: $overview, releaseDate: $releaseDate)';
+    return 'TMDBMovie(voteCount: $voteCount, id: $id, video: $video, voteAverage: $voteAverage, title: $title, popularity: $popularity, posterPath: $posterPath, originalLanguage: $originalLanguage, originalTitle: $originalTitle, genreIds: $genreIds, backdropPath: $backdropPath, adult: $adult, overview: $overview, releaseDate: $releaseDate)';
   }
 
   @override
@@ -404,7 +402,7 @@ class _$_TMDBMovieBasic implements _TMDBMovieBasic {
   }
 }
 
-abstract class _TMDBMovieBasic implements TMDBMovieBasic {
+abstract class _TMDBMovieBasic implements TMDBMovie {
   factory _TMDBMovieBasic(
           {@JsonKey(name: 'vote_count') final int? voteCount,
           required final int id,

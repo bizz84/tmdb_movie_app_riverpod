@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/cancel_token_ref.dart';
 import 'package:tmdb_movie_app_riverpod/src/data/dio_provider.dart';
-import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie_basic.dart';
+import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movies_response.dart';
 
 class MoviesRepository {
@@ -13,7 +13,7 @@ class MoviesRepository {
   final Dio client;
   final String apiKey;
 
-  Future<List<TMDBMovieBasic>> searchMovies(
+  Future<List<TMDBMovie>> searchMovies(
       {required int page, String query = '', CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
@@ -31,7 +31,7 @@ class MoviesRepository {
     return movies.results;
   }
 
-  Future<List<TMDBMovieBasic>> nowPlayingMovies(
+  Future<List<TMDBMovie>> nowPlayingMovies(
       {required int page, CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
@@ -48,7 +48,7 @@ class MoviesRepository {
     return movies.results;
   }
 
-  Future<TMDBMovieBasic> movie(
+  Future<TMDBMovie> movie(
       {required int movieId, CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
@@ -60,7 +60,7 @@ class MoviesRepository {
       },
     ).toString();
     final response = await client.get(url);
-    return TMDBMovieBasic.fromJson(response.data);
+    return TMDBMovie.fromJson(response.data);
   }
 }
 
@@ -73,27 +73,29 @@ final moviesRepositoryProvider = Provider<MoviesRepository>((ref) {
 
 class AbortedException implements Exception {}
 
-final movieProvider = FutureProvider.autoDispose
-    .family<TMDBMovieBasic, int>((ref, movieId) async {
+final movieProvider =
+    FutureProvider.autoDispose.family<TMDBMovie, int>((ref, movieId) async {
   final moviesRepo = ref.watch(moviesRepositoryProvider);
   final cancelToken = ref.cancelToken();
   return moviesRepo.movie(movieId: movieId, cancelToken: cancelToken);
 });
 
 final fetchMoviesProvider = FutureProvider.autoDispose
-    .family<List<TMDBMovieBasic>, MoviesPagination>((ref, pagination) async {
+    .family<List<TMDBMovie>, MoviesPagination>((ref, pagination) async {
   final moviesRepo = ref.watch(moviesRepositoryProvider);
-  // Cancel the page request if the UI no longer needs it before the request
-  // is finished.
-  // This typically happen if the user scrolls very fast
-  // or if we type a different search term.
-  final cancelToken = ref.cancelToken();
+  // Cancel the page request if the UI no longer needs it.
+  // This happens if the user scrolls very fast or if we type a different search
+  // term.
+  final cancelToken = CancelToken();
   // When a page is no-longer used, keep it in the cache.
   final link = ref.keepAlive();
-  Timer(const Duration(seconds: 30), () {
+  final timer = Timer(const Duration(seconds: 30), () {
     link.close();
   });
-
+  ref.onDispose(() {
+    cancelToken.cancel();
+    timer.cancel();
+  });
   if (pagination.query.isEmpty) {
     // use non-search endpoint
     return moviesRepo.nowPlayingMovies(
@@ -101,9 +103,8 @@ final fetchMoviesProvider = FutureProvider.autoDispose
       cancelToken: cancelToken,
     );
   } else {
-    // Debouncing the request. By having this delay, it leaves the opportunity
-    // for consumers to subscribe to a different `meta` parameters. In which
-    // case, this request will be aborted.
+    // Debounce the request. By having this delay, consumers can subscribe to
+    // different parameters. In which case, this request will be aborted.
     await Future.delayed(const Duration(milliseconds: 500));
     if (cancelToken.isCancelled) throw AbortedException();
     // use search endpoint
