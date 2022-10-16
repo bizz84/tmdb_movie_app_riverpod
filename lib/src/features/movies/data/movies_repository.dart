@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/data/movies_pagination.dart';
 import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movie.dart';
 import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movies_response.dart';
 import 'package:tmdb_movie_app_riverpod/src/utils/cancel_token_ref.dart';
@@ -74,6 +75,7 @@ MoviesRepository moviesRepository(MoviesRepositoryRef ref) => MoviesRepository(
 
 class AbortedException implements Exception {}
 
+/// Provider to fetch a movie by ID
 @riverpod
 Future<TMDBMovie> movie(
   MovieRef ref, {
@@ -85,6 +87,7 @@ Future<TMDBMovie> movie(
       .movie(movieId: movieId, cancelToken: cancelToken);
 }
 
+/// Provider to fetch paginated movies data
 @riverpod
 Future<List<TMDBMovie>> fetchMovies(
   FetchMoviesRef ref, {
@@ -122,22 +125,4 @@ Future<List<TMDBMovie>> fetchMovies(
       cancelToken: cancelToken,
     );
   }
-}
-
-class MoviesPagination {
-  MoviesPagination({required this.page, required this.query});
-  final int page;
-  final String query;
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-
-    return other is MoviesPagination &&
-        other.query == query &&
-        other.page == page;
-  }
-
-  @override
-  int get hashCode => query.hashCode ^ page.hashCode;
 }
