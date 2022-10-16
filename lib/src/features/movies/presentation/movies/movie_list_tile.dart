@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/common/movie_poster.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/common/top_gradient.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movie.dart';
+import 'package:tmdb_movie_app_riverpod/src/common_widgets/movie_poster.dart';
+import 'package:tmdb_movie_app_riverpod/src/common_widgets/top_gradient.dart';
 
 class MovieListTile extends StatelessWidget {
   const MovieListTile({

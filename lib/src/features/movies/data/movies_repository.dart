@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
-import 'package:tmdb_movie_app_riverpod/src/data/cancel_token_ref.dart';
-import 'package:tmdb_movie_app_riverpod/src/data/dio_provider.dart';
-import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
-import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movies_response.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movie.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movies_response.dart';
+import 'package:tmdb_movie_app_riverpod/src/utils/cancel_token_ref.dart';
+import 'package:tmdb_movie_app_riverpod/src/utils/dio_provider.dart';
 
 part 'movies_repository.g.dart';
 
