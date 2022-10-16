@@ -33,10 +33,13 @@ This is not meant to be a complete movies app, yet it should implement common us
 - [envied](https://pub.dev/packages/envied) for handling API keys
 - [cached_network_image](https://pub.dev/packages/cached_network_image) for caching images
 
-## Folder structure
+## App Architecture & Folder structure
 
-The project uses a feature-first project structure. More details here:
+The project follows my Riverpod app architecture with a feature-first project structure.
 
+More details here:
+
+- [Flutter App Architecture with Riverpod: An Introduction](https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/)
 - [Flutter Project Structure: Feature-first or Layer-first?](https://codewithandrea.com/articles/flutter-project-structure/)
 
 ## Getting a TMDB API key
