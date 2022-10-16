@@ -25,7 +25,7 @@ class MoviesSearchScreen extends ConsumerWidget {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () {
-                // disposes all the pages previously fetched. Next read will refresh them
+                // dispose all the pages previously fetched. Next read will refresh them
                 ref.invalidate(fetchMoviesProvider);
                 // keep showing the progress indicator until the first page is fetched
                 return ref.read(

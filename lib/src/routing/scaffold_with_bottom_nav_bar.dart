@@ -3,6 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:tmdb_movie_app_riverpod/src/localization/string_hardcoded.dart';
 import 'package:tmdb_movie_app_riverpod/src/routing/app_router.dart';
 
+// This is a temporary implementation
+// TODO: Implement a better solution once this PR is merged:
+// https://github.com/flutter/packages/pull/2650
 class ScaffoldWithBottomNavBar extends StatefulWidget {
   const ScaffoldWithBottomNavBar({Key? key, required this.child})
       : super(key: key);

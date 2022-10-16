@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tmdb_movie_app_riverpod/src/domain/tmdb_movie.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/movie/movie_details_screen.dart';
+import 'package:tmdb_movie_app_riverpod/src/presentation/movie_details/movie_details_screen.dart';
 import 'package:tmdb_movie_app_riverpod/src/presentation/search/movies_search_screen.dart';
 import 'package:tmdb_movie_app_riverpod/src/routing/scaffold_with_bottom_nav_bar.dart';
 
@@ -22,6 +22,8 @@ final goRouterProvider = Provider<GoRouter>((ref) {
     navigatorKey: _rootNavigatorKey,
     debugLogDiagnostics: true,
     routes: [
+      // TODO: Implement with stateful nested navigation once this PR is merged:
+      // https://github.com/flutter/packages/pull/2650
       ShellRoute(
         navigatorKey: _shellNavigatorKey,
         builder: (context, state, child) {
