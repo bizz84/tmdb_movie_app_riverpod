@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:tmdb_movie_app_riverpod/src/data/movies_repository.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/search/movie_list_tile.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/search/movie_list_tile_shimmer.dart';
-import 'package:tmdb_movie_app_riverpod/src/presentation/search/movies_search_bar.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/data/movies_pagination.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/data/movies_repository.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movie_list_tile.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movie_list_tile_shimmer.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movies_search_bar.dart';
 import 'package:tmdb_movie_app_riverpod/src/routing/app_router.dart';
 
 class MoviesSearchScreen extends ConsumerWidget {
@@ -17,7 +18,7 @@ class MoviesSearchScreen extends ConsumerWidget {
     final query = ref.watch(moviesSearchTextProvider);
     return Scaffold(
       appBar: AppBar(
-        title: const Text('TMDB Movies Search'),
+        title: const Text('TMDB Movies'),
       ),
       body: Column(
         children: [

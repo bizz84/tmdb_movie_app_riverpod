@@ -33,13 +33,22 @@ This is not meant to be a complete movies app, yet it should implement common us
 - [envied](https://pub.dev/packages/envied) for handling API keys
 - [cached_network_image](https://pub.dev/packages/cached_network_image) for caching images
 
+## App Architecture & Folder structure
+
+The project follows my Riverpod app architecture with a feature-first project structure.
+
+More details here:
+
+- [Flutter App Architecture with Riverpod: An Introduction](https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/)
+- [Flutter Project Structure: Feature-first or Layer-first?](https://codewithandrea.com/articles/flutter-project-structure/)
+
 ## Getting a TMDB API key
 
 This project uses the TMDB API to get the latest movies data.
 
 Before running the app you need to [sign up on the TMDB website](https://www.themoviedb.org/signup), then obtain an API key on the [settings API page](https://www.themoviedb.org/settings/api).
 
-Once you have this, create an `.env` file inside `packages/core/`, and add your key:
+Once you have this, create an `.env` file **at the root of the project** and add your key:
 
 ```dart
 // .env
@@ -52,7 +61,7 @@ Then, run the code generator:
 flutter pub run build_runner build --delete-conflicting-outputs
 ```
 
-This will generate a `env.g.dart` file inside `packages/core/lib/api`, that is used when making requests to the TMDB API.
+This will generate a `env.g.dart` file inside `lib/env`. This contains the `tmdbApiKey` that is used when making requests to the TMDB API.
 
 Congratulations, you're good to go. 😎
 

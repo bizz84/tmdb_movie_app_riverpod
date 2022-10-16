@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tmdb_movie_app_riverpod/src/data/logger_interceptor.dart';
+import 'package:tmdb_movie_app_riverpod/src/utils/logger_interceptor.dart';
 
 part 'dio_provider.g.dart';
 
