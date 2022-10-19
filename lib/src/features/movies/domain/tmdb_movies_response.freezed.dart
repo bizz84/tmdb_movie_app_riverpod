@@ -38,7 +38,8 @@ mixin _$TMDBMoviesResponse {
 abstract class $TMDBMoviesResponseCopyWith<$Res> {
   factory $TMDBMoviesResponseCopyWith(
           TMDBMoviesResponse value, $Res Function(TMDBMoviesResponse) then) =
-      _$TMDBMoviesResponseCopyWithImpl<$Res>;
+      _$TMDBMoviesResponseCopyWithImpl<$Res, TMDBMoviesResponse>;
+  @useResult
   $Res call(
       {int page,
       List<TMDBMovie> results,
@@ -48,44 +49,46 @@ abstract class $TMDBMoviesResponseCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TMDBMoviesResponseCopyWithImpl<$Res>
+class _$TMDBMoviesResponseCopyWithImpl<$Res, $Val extends TMDBMoviesResponse>
     implements $TMDBMoviesResponseCopyWith<$Res> {
   _$TMDBMoviesResponseCopyWithImpl(this._value, this._then);
 
-  final TMDBMoviesResponse _value;
   // ignore: unused_field
-  final $Res Function(TMDBMoviesResponse) _then;
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
 
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? page = freezed,
-    Object? results = freezed,
-    Object? totalResults = freezed,
-    Object? totalPages = freezed,
-    Object? errors = freezed,
+    Object? page = null,
+    Object? results = null,
+    Object? totalResults = null,
+    Object? totalPages = null,
+    Object? errors = null,
   }) {
     return _then(_value.copyWith(
-      page: page == freezed
+      page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
-      results: results == freezed
+      results: null == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
               as List<TMDBMovie>,
-      totalResults: totalResults == freezed
+      totalResults: null == totalResults
           ? _value.totalResults
           : totalResults // ignore: cast_nullable_to_non_nullable
               as int,
-      totalPages: totalPages == freezed
+      totalPages: null == totalPages
           ? _value.totalPages
           : totalPages // ignore: cast_nullable_to_non_nullable
               as int,
-      errors: errors == freezed
+      errors: null == errors
           ? _value.errors
           : errors // ignore: cast_nullable_to_non_nullable
               as List<String>,
-    ));
+    ) as $Val);
   }
 }
 
@@ -96,6 +99,7 @@ abstract class _$$_TMDBMoviesResponseCopyWith<$Res>
           $Res Function(_$_TMDBMoviesResponse) then) =
       __$$_TMDBMoviesResponseCopyWithImpl<$Res>;
   @override
+  @useResult
   $Res call(
       {int page,
       List<TMDBMovie> results,
@@ -106,41 +110,39 @@ abstract class _$$_TMDBMoviesResponseCopyWith<$Res>
 
 /// @nodoc
 class __$$_TMDBMoviesResponseCopyWithImpl<$Res>
-    extends _$TMDBMoviesResponseCopyWithImpl<$Res>
+    extends _$TMDBMoviesResponseCopyWithImpl<$Res, _$_TMDBMoviesResponse>
     implements _$$_TMDBMoviesResponseCopyWith<$Res> {
   __$$_TMDBMoviesResponseCopyWithImpl(
       _$_TMDBMoviesResponse _value, $Res Function(_$_TMDBMoviesResponse) _then)
-      : super(_value, (v) => _then(v as _$_TMDBMoviesResponse));
+      : super(_value, _then);
 
-  @override
-  _$_TMDBMoviesResponse get _value => super._value as _$_TMDBMoviesResponse;
-
+  @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? page = freezed,
-    Object? results = freezed,
-    Object? totalResults = freezed,
-    Object? totalPages = freezed,
-    Object? errors = freezed,
+    Object? page = null,
+    Object? results = null,
+    Object? totalResults = null,
+    Object? totalPages = null,
+    Object? errors = null,
   }) {
     return _then(_$_TMDBMoviesResponse(
-      page: page == freezed
+      page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
               as int,
-      results: results == freezed
+      results: null == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
               as List<TMDBMovie>,
-      totalResults: totalResults == freezed
+      totalResults: null == totalResults
           ? _value.totalResults
           : totalResults // ignore: cast_nullable_to_non_nullable
               as int,
-      totalPages: totalPages == freezed
+      totalPages: null == totalPages
           ? _value.totalPages
           : totalPages // ignore: cast_nullable_to_non_nullable
               as int,
-      errors: errors == freezed
+      errors: null == errors
           ? _value._errors
           : errors // ignore: cast_nullable_to_non_nullable
               as List<String>,
@@ -196,12 +198,12 @@ class _$_TMDBMoviesResponse implements _TMDBMoviesResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_TMDBMoviesResponse &&
-            const DeepCollectionEquality().equals(other.page, page) &&
+            (identical(other.page, page) || other.page == page) &&
             const DeepCollectionEquality().equals(other._results, _results) &&
-            const DeepCollectionEquality()
-                .equals(other.totalResults, totalResults) &&
-            const DeepCollectionEquality()
-                .equals(other.totalPages, totalPages) &&
+            (identical(other.totalResults, totalResults) ||
+                other.totalResults == totalResults) &&
+            (identical(other.totalPages, totalPages) ||
+                other.totalPages == totalPages) &&
             const DeepCollectionEquality().equals(other._errors, _errors));
   }
 
@@ -209,14 +211,15 @@ class _$_TMDBMoviesResponse implements _TMDBMoviesResponse {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      const DeepCollectionEquality().hash(page),
+      page,
       const DeepCollectionEquality().hash(_results),
-      const DeepCollectionEquality().hash(totalResults),
-      const DeepCollectionEquality().hash(totalPages),
+      totalResults,
+      totalPages,
       const DeepCollectionEquality().hash(_errors));
 
   @JsonKey(ignore: true)
   @override
+  @pragma('vm:prefer-inline')
   _$$_TMDBMoviesResponseCopyWith<_$_TMDBMoviesResponse> get copyWith =>
       __$$_TMDBMoviesResponseCopyWithImpl<_$_TMDBMoviesResponse>(
           this, _$identity);

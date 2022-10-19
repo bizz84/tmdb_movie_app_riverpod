@@ -42,7 +42,9 @@ final moviesRepositoryProvider = AutoDisposeProvider<MoviesRepository>(
 typedef MoviesRepositoryRef = AutoDisposeProviderRef<MoviesRepository>;
 String $movieHash() => r'a84110beb4fdebcf3fa74dfcb6879ea287bc915c';
 
-/// See also [movie].
+/// Provider to fetch a movie by ID
+///
+/// Copied from [movie].
 class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
   MovieProvider({
     required this.movieId,
@@ -75,7 +77,9 @@ class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
 
 typedef MovieRef = AutoDisposeFutureProviderRef<TMDBMovie>;
 
-/// See also [movie].
+/// Provider to fetch a movie by ID
+///
+/// Copied from [movie].
 final movieProvider = MovieFamily();
 
 class MovieFamily extends Family<AsyncValue<TMDBMovie>> {
@@ -110,7 +114,9 @@ class MovieFamily extends Family<AsyncValue<TMDBMovie>> {
 
 String $fetchMoviesHash() => r'3e3a7b8d1f035438db0c08326996250032c5b7b2';
 
-/// See also [fetchMovies].
+/// Provider to fetch paginated movies data
+///
+/// Copied from [fetchMovies].
 class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
   FetchMoviesProvider({
     required this.pagination,
@@ -145,7 +151,9 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
 
 typedef FetchMoviesRef = AutoDisposeFutureProviderRef<List<TMDBMovie>>;
 
-/// See also [fetchMovies].
+/// Provider to fetch paginated movies data
+///
+/// Copied from [fetchMovies].
 final fetchMoviesProvider = FetchMoviesFamily();
 
 class FetchMoviesFamily extends Family<AsyncValue<List<TMDBMovie>>> {
