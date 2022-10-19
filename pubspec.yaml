@@ -1,5 +1,5 @@
 name: tmdb_movie_app_riverpod
-description: A new Flutter project.
+description: Flutter Movies app with Riverpod (TMDB API)
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
