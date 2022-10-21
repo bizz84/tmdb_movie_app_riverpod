@@ -25,7 +25,7 @@ This is not meant to be a complete movies app, yet it should implement common us
 
 ## Packages in use
 
-- [flutter_riverpod](https://pub.dev/packages/riverpod) for data caching (and much more!)
+- [flutter_riverpod](https://pub.dev/packages/riverpod) and [riverpod_generator](https://pub.dev/packages/riverpod_generator) for data caching (and much more!)
 - [freezed](https://pub.dev/packages/freezed) for JSON serialization
 - [dio](https://pub.dev/packages/dio) for networking
 - [go_router](https://pub.dev/packages/go_router) for navigation
@@ -41,6 +41,10 @@ More details here:
 
 - [Flutter App Architecture with Riverpod: An Introduction](https://codewithandrea.com/articles/flutter-app-architecture-riverpod-introduction/)
 - [Flutter Project Structure: Feature-first or Layer-first?](https://codewithandrea.com/articles/flutter-project-structure/)
+
+It also uses the new [Riverpod Generator](https://pub.dev/packages/riverpod_generator) package, which I have covered here:
+
+- [How to Auto-Generate your Providers with Flutter Riverpod Generator](https://codewithandrea.com/articles/flutter-riverpod-generator/)
 
 ## Getting a TMDB API key
 
