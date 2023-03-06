@@ -6,7 +6,22 @@ part of 'movies_repository.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$moviesRepositoryHash() => r'1a9b2c557c8a8214d4474d50bfcfa07cda40a95f';
+
+/// See also [moviesRepository].
+@ProviderFor(moviesRepository)
+final moviesRepositoryProvider = AutoDisposeProvider<MoviesRepository>.internal(
+  moviesRepository,
+  name: r'moviesRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$moviesRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef MoviesRepositoryRef = AutoDisposeProviderRef<MoviesRepository>;
+String _$movieHash() => r'a84110beb4fdebcf3fa74dfcb6879ea287bc915c';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,26 +44,68 @@ class _SystemHash {
   }
 }
 
-String $moviesRepositoryHash() => r'1a9b2c557c8a8214d4474d50bfcfa07cda40a95f';
+typedef MovieRef = AutoDisposeFutureProviderRef<TMDBMovie>;
 
-/// See also [moviesRepository].
-final moviesRepositoryProvider = AutoDisposeProvider<MoviesRepository>(
-  moviesRepository,
-  name: r'moviesRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $moviesRepositoryHash,
-);
-typedef MoviesRepositoryRef = AutoDisposeProviderRef<MoviesRepository>;
-String $movieHash() => r'a84110beb4fdebcf3fa74dfcb6879ea287bc915c';
+/// Provider to fetch a movie by ID
+///
+/// Copied from [movie].
+@ProviderFor(movie)
+const movieProvider = MovieFamily();
+
+/// Provider to fetch a movie by ID
+///
+/// Copied from [movie].
+class MovieFamily extends Family<AsyncValue<TMDBMovie>> {
+  /// Provider to fetch a movie by ID
+  ///
+  /// Copied from [movie].
+  const MovieFamily();
+
+  /// Provider to fetch a movie by ID
+  ///
+  /// Copied from [movie].
+  MovieProvider call({
+    required int movieId,
+  }) {
+    return MovieProvider(
+      movieId: movieId,
+    );
+  }
+
+  @override
+  MovieProvider getProviderOverride(
+    covariant MovieProvider provider,
+  ) {
+    return call(
+      movieId: provider.movieId,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'movieProvider';
+}
 
 /// Provider to fetch a movie by ID
 ///
 /// Copied from [movie].
 class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
+  /// Provider to fetch a movie by ID
+  ///
+  /// Copied from [movie].
   MovieProvider({
     required this.movieId,
-  }) : super(
+  }) : super.internal(
           (ref) => movie(
             ref,
             movieId: movieId,
@@ -56,7 +113,11 @@ class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
           from: movieProvider,
           name: r'movieProvider',
           debugGetCreateSourceHash:
-              const bool.fromEnvironment('dart.vm.product') ? null : $movieHash,
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : _$movieHash,
+          dependencies: MovieFamily._dependencies,
+          allTransitiveDependencies: MovieFamily._allTransitiveDependencies,
         );
 
   final int movieId;
@@ -75,52 +136,69 @@ class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
   }
 }
 
-typedef MovieRef = AutoDisposeFutureProviderRef<TMDBMovie>;
+String _$fetchMoviesHash() => r'3e3a7b8d1f035438db0c08326996250032c5b7b2';
+typedef FetchMoviesRef = AutoDisposeFutureProviderRef<List<TMDBMovie>>;
 
-/// Provider to fetch a movie by ID
+/// Provider to fetch paginated movies data
 ///
-/// Copied from [movie].
-final movieProvider = MovieFamily();
+/// Copied from [fetchMovies].
+@ProviderFor(fetchMovies)
+const fetchMoviesProvider = FetchMoviesFamily();
 
-class MovieFamily extends Family<AsyncValue<TMDBMovie>> {
-  MovieFamily();
+/// Provider to fetch paginated movies data
+///
+/// Copied from [fetchMovies].
+class FetchMoviesFamily extends Family<AsyncValue<List<TMDBMovie>>> {
+  /// Provider to fetch paginated movies data
+  ///
+  /// Copied from [fetchMovies].
+  const FetchMoviesFamily();
 
-  MovieProvider call({
-    required int movieId,
+  /// Provider to fetch paginated movies data
+  ///
+  /// Copied from [fetchMovies].
+  FetchMoviesProvider call({
+    required MoviesPagination pagination,
   }) {
-    return MovieProvider(
-      movieId: movieId,
+    return FetchMoviesProvider(
+      pagination: pagination,
     );
   }
 
   @override
-  AutoDisposeFutureProvider<TMDBMovie> getProviderOverride(
-    covariant MovieProvider provider,
+  FetchMoviesProvider getProviderOverride(
+    covariant FetchMoviesProvider provider,
   ) {
     return call(
-      movieId: provider.movieId,
+      pagination: provider.pagination,
     );
   }
 
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
 
   @override
-  List<ProviderOrFamily>? get dependencies => null;
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
 
   @override
-  String? get name => r'movieProvider';
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'fetchMoviesProvider';
 }
-
-String $fetchMoviesHash() => r'3e3a7b8d1f035438db0c08326996250032c5b7b2';
 
 /// Provider to fetch paginated movies data
 ///
 /// Copied from [fetchMovies].
 class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
+  /// Provider to fetch paginated movies data
+  ///
+  /// Copied from [fetchMovies].
   FetchMoviesProvider({
     required this.pagination,
-  }) : super(
+  }) : super.internal(
           (ref) => fetchMovies(
             ref,
             pagination: pagination,
@@ -130,7 +208,10 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $fetchMoviesHash,
+                  : _$fetchMoviesHash,
+          dependencies: FetchMoviesFamily._dependencies,
+          allTransitiveDependencies:
+              FetchMoviesFamily._allTransitiveDependencies,
         );
 
   final MoviesPagination pagination;
@@ -148,40 +229,4 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
     return _SystemHash.finish(hash);
   }
 }
-
-typedef FetchMoviesRef = AutoDisposeFutureProviderRef<List<TMDBMovie>>;
-
-/// Provider to fetch paginated movies data
-///
-/// Copied from [fetchMovies].
-final fetchMoviesProvider = FetchMoviesFamily();
-
-class FetchMoviesFamily extends Family<AsyncValue<List<TMDBMovie>>> {
-  FetchMoviesFamily();
-
-  FetchMoviesProvider call({
-    required MoviesPagination pagination,
-  }) {
-    return FetchMoviesProvider(
-      pagination: pagination,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<List<TMDBMovie>> getProviderOverride(
-    covariant FetchMoviesProvider provider,
-  ) {
-    return call(
-      pagination: provider.pagination,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'fetchMoviesProvider';
-}
+// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
