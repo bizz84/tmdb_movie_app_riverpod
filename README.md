@@ -16,11 +16,11 @@ This is not meant to be a complete movies app, yet it should implement common us
 - Pull to refresh
 - Search functionality
 - Loading UI with the [Shimmer](https://pub.dev/packages/shimmer) package
+- Stateful nested routing with [`StatefulShellRoute`](https://pub.dev/documentation/go_router/latest/go_router/StatefulShellRoute-class.html)
 
 ## Planned Features (no promises 😅)
 
 - Favourites
-- Stateful nested routing
 - Responsive UI
 
 ## Packages in use
