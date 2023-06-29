@@ -50,7 +50,9 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                     pageBuilder: (context, state) {
                       final id =
                           int.parse(state.pathParameters['id'] as String);
-                      final movie = state.extra as TMDBMovie?;
+                      final movie = state.extra is TMDBMovie
+                          ? state.extra as TMDBMovie
+                          : null;
                       return MaterialPage(
                         key: state.pageKey,
                         child: MovieDetailsScreen(movieId: id, movie: movie),
