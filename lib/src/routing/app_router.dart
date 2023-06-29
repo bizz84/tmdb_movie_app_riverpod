@@ -44,7 +44,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
                 path: ':id',
                 name: AppRoute.movie.name,
                 pageBuilder: (context, state) {
-                  final id = int.parse(state.params['id'] as String);
+                  final id = int.parse(state.pathParameters['id'] as String);
                   final movie = state.extra as TMDBMovie?;
                   return MaterialPage(
                     key: state.pageKey,
