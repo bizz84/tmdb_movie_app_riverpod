@@ -37,8 +37,8 @@ class MovieDetailsScreen extends ConsumerWidget {
           appBar: AppBar(
             title: Text(movie?.title ?? 'Loading'),
           ),
-          body: Column(
-            children: const [
+          body: const Column(
+            children: [
               MovieListTileShimmer(),
             ],
           ),
