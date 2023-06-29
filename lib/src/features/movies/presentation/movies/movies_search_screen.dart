@@ -62,7 +62,7 @@ class MoviesSearchScreen extends ConsumerWidget {
                         debugIndex: index,
                         onPressed: () => context.goNamed(
                           AppRoute.movie.name,
-                          params: {'id': movie.id.toString()},
+                          pathParameters: {'id': movie.id.toString()},
                           extra: movie,
                         ),
                       );
