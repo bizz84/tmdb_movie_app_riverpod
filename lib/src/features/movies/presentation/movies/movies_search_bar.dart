@@ -8,7 +8,7 @@ final moviesSearchTextProvider = StateProvider<String>((ref) {
 });
 
 class MoviesSearchBar extends ConsumerStatefulWidget {
-  const MoviesSearchBar({Key? key}) : super(key: key);
+  const MoviesSearchBar({super.key});
 
   @override
   ConsumerState<MoviesSearchBar> createState() => _SearchBarState();

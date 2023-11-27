@@ -1,14 +1,14 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of core;
+part of 'tmdb_movies_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TMDBMoviesResponse _$$_TMDBMoviesResponseFromJson(
+_$TMDBMoviesResponseImpl _$$TMDBMoviesResponseImplFromJson(
         Map<String, dynamic> json) =>
-    _$_TMDBMoviesResponse(
+    _$TMDBMoviesResponseImpl(
       page: json['page'] as int,
       results: (json['results'] as List<dynamic>)
           .map((e) => TMDBMovie.fromJson(e as Map<String, dynamic>))
@@ -21,8 +21,8 @@ _$_TMDBMoviesResponse _$$_TMDBMoviesResponseFromJson(
           const [],
     );
 
-Map<String, dynamic> _$$_TMDBMoviesResponseToJson(
-        _$_TMDBMoviesResponse instance) =>
+Map<String, dynamic> _$$TMDBMoviesResponseImplToJson(
+        _$TMDBMoviesResponseImpl instance) =>
     <String, dynamic>{
       'page': instance.page,
       'results': instance.results,

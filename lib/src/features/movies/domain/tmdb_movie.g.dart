@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of core;
+part of 'tmdb_movie.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_TMDBMovieBasic _$$_TMDBMovieBasicFromJson(Map<String, dynamic> json) =>
-    _$_TMDBMovieBasic(
+_$TMDBMovieBasicImpl _$$TMDBMovieBasicImplFromJson(Map<String, dynamic> json) =>
+    _$TMDBMovieBasicImpl(
       voteCount: json['vote_count'] as int?,
       id: json['id'] as int,
       video: json['video'] as bool? ?? false,
@@ -25,7 +25,8 @@ _$_TMDBMovieBasic _$$_TMDBMovieBasicFromJson(Map<String, dynamic> json) =>
       releaseDate: json['release_date'] as String?,
     );
 
-Map<String, dynamic> _$$_TMDBMovieBasicToJson(_$_TMDBMovieBasic instance) =>
+Map<String, dynamic> _$$TMDBMovieBasicImplToJson(
+        _$TMDBMovieBasicImpl instance) =>
     <String, dynamic>{
       'vote_count': instance.voteCount,
       'id': instance.id,

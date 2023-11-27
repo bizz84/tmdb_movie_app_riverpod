@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of core;
+part of 'tmdb_movies_response.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -93,11 +93,11 @@ class _$TMDBMoviesResponseCopyWithImpl<$Res, $Val extends TMDBMoviesResponse>
 }
 
 /// @nodoc
-abstract class _$$_TMDBMoviesResponseCopyWith<$Res>
+abstract class _$$TMDBMoviesResponseImplCopyWith<$Res>
     implements $TMDBMoviesResponseCopyWith<$Res> {
-  factory _$$_TMDBMoviesResponseCopyWith(_$_TMDBMoviesResponse value,
-          $Res Function(_$_TMDBMoviesResponse) then) =
-      __$$_TMDBMoviesResponseCopyWithImpl<$Res>;
+  factory _$$TMDBMoviesResponseImplCopyWith(_$TMDBMoviesResponseImpl value,
+          $Res Function(_$TMDBMoviesResponseImpl) then) =
+      __$$TMDBMoviesResponseImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -109,11 +109,11 @@ abstract class _$$_TMDBMoviesResponseCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TMDBMoviesResponseCopyWithImpl<$Res>
-    extends _$TMDBMoviesResponseCopyWithImpl<$Res, _$_TMDBMoviesResponse>
-    implements _$$_TMDBMoviesResponseCopyWith<$Res> {
-  __$$_TMDBMoviesResponseCopyWithImpl(
-      _$_TMDBMoviesResponse _value, $Res Function(_$_TMDBMoviesResponse) _then)
+class __$$TMDBMoviesResponseImplCopyWithImpl<$Res>
+    extends _$TMDBMoviesResponseCopyWithImpl<$Res, _$TMDBMoviesResponseImpl>
+    implements _$$TMDBMoviesResponseImplCopyWith<$Res> {
+  __$$TMDBMoviesResponseImplCopyWithImpl(_$TMDBMoviesResponseImpl _value,
+      $Res Function(_$TMDBMoviesResponseImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -125,7 +125,7 @@ class __$$_TMDBMoviesResponseCopyWithImpl<$Res>
     Object? totalPages = null,
     Object? errors = null,
   }) {
-    return _then(_$_TMDBMoviesResponse(
+    return _then(_$TMDBMoviesResponseImpl(
       page: null == page
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
@@ -152,8 +152,8 @@ class __$$_TMDBMoviesResponseCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TMDBMoviesResponse implements _TMDBMoviesResponse {
-  _$_TMDBMoviesResponse(
+class _$TMDBMoviesResponseImpl implements _TMDBMoviesResponse {
+  _$TMDBMoviesResponseImpl(
       {required this.page,
       required final List<TMDBMovie> results,
       @JsonKey(name: 'total_results') required this.totalResults,
@@ -162,8 +162,8 @@ class _$_TMDBMoviesResponse implements _TMDBMoviesResponse {
       : _results = results,
         _errors = errors;
 
-  factory _$_TMDBMoviesResponse.fromJson(Map<String, dynamic> json) =>
-      _$$_TMDBMoviesResponseFromJson(json);
+  factory _$TMDBMoviesResponseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TMDBMoviesResponseImplFromJson(json);
 
   @override
   final int page;
@@ -199,7 +199,7 @@ class _$_TMDBMoviesResponse implements _TMDBMoviesResponse {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TMDBMoviesResponse &&
+            other is _$TMDBMoviesResponseImpl &&
             (identical(other.page, page) || other.page == page) &&
             const DeepCollectionEquality().equals(other._results, _results) &&
             (identical(other.totalResults, totalResults) ||
@@ -222,13 +222,13 @@ class _$_TMDBMoviesResponse implements _TMDBMoviesResponse {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TMDBMoviesResponseCopyWith<_$_TMDBMoviesResponse> get copyWith =>
-      __$$_TMDBMoviesResponseCopyWithImpl<_$_TMDBMoviesResponse>(
+  _$$TMDBMoviesResponseImplCopyWith<_$TMDBMoviesResponseImpl> get copyWith =>
+      __$$TMDBMoviesResponseImplCopyWithImpl<_$TMDBMoviesResponseImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TMDBMoviesResponseToJson(
+    return _$$TMDBMoviesResponseImplToJson(
       this,
     );
   }
@@ -240,10 +240,10 @@ abstract class _TMDBMoviesResponse implements TMDBMoviesResponse {
       required final List<TMDBMovie> results,
       @JsonKey(name: 'total_results') required final int totalResults,
       @JsonKey(name: 'total_pages') required final int totalPages,
-      final List<String> errors}) = _$_TMDBMoviesResponse;
+      final List<String> errors}) = _$TMDBMoviesResponseImpl;
 
   factory _TMDBMoviesResponse.fromJson(Map<String, dynamic> json) =
-      _$_TMDBMoviesResponse.fromJson;
+      _$TMDBMoviesResponseImpl.fromJson;
 
   @override
   int get page;
@@ -259,6 +259,6 @@ abstract class _TMDBMoviesResponse implements TMDBMoviesResponse {
   List<String> get errors;
   @override
   @JsonKey(ignore: true)
-  _$$_TMDBMoviesResponseCopyWith<_$_TMDBMoviesResponse> get copyWith =>
+  _$$TMDBMoviesResponseImplCopyWith<_$TMDBMoviesResponseImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -44,8 +44,6 @@ class _SystemHash {
   }
 }
 
-typedef MovieRef = AutoDisposeFutureProviderRef<TMDBMovie>;
-
 /// Provider to fetch a movie by ID
 ///
 /// Copied from [movie].
@@ -104,10 +102,10 @@ class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
   ///
   /// Copied from [movie].
   MovieProvider({
-    required this.movieId,
-  }) : super.internal(
+    required int movieId,
+  }) : this._internal(
           (ref) => movie(
-            ref,
+            ref as MovieRef,
             movieId: movieId,
           ),
           from: movieProvider,
@@ -118,9 +116,43 @@ class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
                   : _$movieHash,
           dependencies: MovieFamily._dependencies,
           allTransitiveDependencies: MovieFamily._allTransitiveDependencies,
+          movieId: movieId,
         );
 
+  MovieProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.movieId,
+  }) : super.internal();
+
   final int movieId;
+
+  @override
+  Override overrideWith(
+    FutureOr<TMDBMovie> Function(MovieRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: MovieProvider._internal(
+        (ref) => create(ref as MovieRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        movieId: movieId,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<TMDBMovie> createElement() {
+    return _MovieProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -136,8 +168,20 @@ class MovieProvider extends AutoDisposeFutureProvider<TMDBMovie> {
   }
 }
 
-String _$fetchMoviesHash() => r'3e3a7b8d1f035438db0c08326996250032c5b7b2';
-typedef FetchMoviesRef = AutoDisposeFutureProviderRef<List<TMDBMovie>>;
+mixin MovieRef on AutoDisposeFutureProviderRef<TMDBMovie> {
+  /// The parameter `movieId` of this provider.
+  int get movieId;
+}
+
+class _MovieProviderElement extends AutoDisposeFutureProviderElement<TMDBMovie>
+    with MovieRef {
+  _MovieProviderElement(super.provider);
+
+  @override
+  int get movieId => (origin as MovieProvider).movieId;
+}
+
+String _$fetchMoviesHash() => r'cd39a67f8cc6a104d1058189f2151834a8eac1d0';
 
 /// Provider to fetch paginated movies data
 ///
@@ -197,10 +241,10 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
   ///
   /// Copied from [fetchMovies].
   FetchMoviesProvider({
-    required this.pagination,
-  }) : super.internal(
+    required MoviesPagination pagination,
+  }) : this._internal(
           (ref) => fetchMovies(
-            ref,
+            ref as FetchMoviesRef,
             pagination: pagination,
           ),
           from: fetchMoviesProvider,
@@ -212,9 +256,43 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
           dependencies: FetchMoviesFamily._dependencies,
           allTransitiveDependencies:
               FetchMoviesFamily._allTransitiveDependencies,
+          pagination: pagination,
         );
 
+  FetchMoviesProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.pagination,
+  }) : super.internal();
+
   final MoviesPagination pagination;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<TMDBMovie>> Function(FetchMoviesRef provider) create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: FetchMoviesProvider._internal(
+        (ref) => create(ref as FetchMoviesRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        pagination: pagination,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<TMDBMovie>> createElement() {
+    return _FetchMoviesProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -229,4 +307,19 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
     return _SystemHash.finish(hash);
   }
 }
-// ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions
+
+mixin FetchMoviesRef on AutoDisposeFutureProviderRef<List<TMDBMovie>> {
+  /// The parameter `pagination` of this provider.
+  MoviesPagination get pagination;
+}
+
+class _FetchMoviesProviderElement
+    extends AutoDisposeFutureProviderElement<List<TMDBMovie>>
+    with FetchMoviesRef {
+  _FetchMoviesProviderElement(super.provider);
+
+  @override
+  MoviesPagination get pagination => (origin as FetchMoviesProvider).pagination;
+}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

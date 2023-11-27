@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of core;
+part of 'tmdb_movie.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -161,11 +161,11 @@ class _$TMDBMovieCopyWithImpl<$Res, $Val extends TMDBMovie>
 }
 
 /// @nodoc
-abstract class _$$_TMDBMovieBasicCopyWith<$Res>
+abstract class _$$TMDBMovieBasicImplCopyWith<$Res>
     implements $TMDBMovieCopyWith<$Res> {
-  factory _$$_TMDBMovieBasicCopyWith(
-          _$_TMDBMovieBasic value, $Res Function(_$_TMDBMovieBasic) then) =
-      __$$_TMDBMovieBasicCopyWithImpl<$Res>;
+  factory _$$TMDBMovieBasicImplCopyWith(_$TMDBMovieBasicImpl value,
+          $Res Function(_$TMDBMovieBasicImpl) then) =
+      __$$TMDBMovieBasicImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -186,11 +186,11 @@ abstract class _$$_TMDBMovieBasicCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TMDBMovieBasicCopyWithImpl<$Res>
-    extends _$TMDBMovieCopyWithImpl<$Res, _$_TMDBMovieBasic>
-    implements _$$_TMDBMovieBasicCopyWith<$Res> {
-  __$$_TMDBMovieBasicCopyWithImpl(
-      _$_TMDBMovieBasic _value, $Res Function(_$_TMDBMovieBasic) _then)
+class __$$TMDBMovieBasicImplCopyWithImpl<$Res>
+    extends _$TMDBMovieCopyWithImpl<$Res, _$TMDBMovieBasicImpl>
+    implements _$$TMDBMovieBasicImplCopyWith<$Res> {
+  __$$TMDBMovieBasicImplCopyWithImpl(
+      _$TMDBMovieBasicImpl _value, $Res Function(_$TMDBMovieBasicImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -211,7 +211,7 @@ class __$$_TMDBMovieBasicCopyWithImpl<$Res>
     Object? overview = freezed,
     Object? releaseDate = freezed,
   }) {
-    return _then(_$_TMDBMovieBasic(
+    return _then(_$TMDBMovieBasicImpl(
       voteCount: freezed == voteCount
           ? _value.voteCount
           : voteCount // ignore: cast_nullable_to_non_nullable
@@ -274,8 +274,8 @@ class __$$_TMDBMovieBasicCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TMDBMovieBasic implements _TMDBMovieBasic {
-  _$_TMDBMovieBasic(
+class _$TMDBMovieBasicImpl implements _TMDBMovieBasic {
+  _$TMDBMovieBasicImpl(
       {@JsonKey(name: 'vote_count') this.voteCount,
       required this.id,
       this.video = false,
@@ -292,8 +292,8 @@ class _$_TMDBMovieBasic implements _TMDBMovieBasic {
       @JsonKey(name: 'release_date') this.releaseDate})
       : _genreIds = genreIds;
 
-  factory _$_TMDBMovieBasic.fromJson(Map<String, dynamic> json) =>
-      _$$_TMDBMovieBasicFromJson(json);
+  factory _$TMDBMovieBasicImpl.fromJson(Map<String, dynamic> json) =>
+      _$$TMDBMovieBasicImplFromJson(json);
 
   @override
   @JsonKey(name: 'vote_count')
@@ -350,7 +350,7 @@ class _$_TMDBMovieBasic implements _TMDBMovieBasic {
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TMDBMovieBasic &&
+            other is _$TMDBMovieBasicImpl &&
             (identical(other.voteCount, voteCount) ||
                 other.voteCount == voteCount) &&
             (identical(other.id, id) || other.id == id) &&
@@ -398,12 +398,13 @@ class _$_TMDBMovieBasic implements _TMDBMovieBasic {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_TMDBMovieBasicCopyWith<_$_TMDBMovieBasic> get copyWith =>
-      __$$_TMDBMovieBasicCopyWithImpl<_$_TMDBMovieBasic>(this, _$identity);
+  _$$TMDBMovieBasicImplCopyWith<_$TMDBMovieBasicImpl> get copyWith =>
+      __$$TMDBMovieBasicImplCopyWithImpl<_$TMDBMovieBasicImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TMDBMovieBasicToJson(
+    return _$$TMDBMovieBasicImplToJson(
       this,
     );
   }
@@ -425,10 +426,10 @@ abstract class _TMDBMovieBasic implements TMDBMovie {
           final bool? adult,
           final String? overview,
           @JsonKey(name: 'release_date') final String? releaseDate}) =
-      _$_TMDBMovieBasic;
+      _$TMDBMovieBasicImpl;
 
   factory _TMDBMovieBasic.fromJson(Map<String, dynamic> json) =
-      _$_TMDBMovieBasic.fromJson;
+      _$TMDBMovieBasicImpl.fromJson;
 
   @override
   @JsonKey(name: 'vote_count')
@@ -468,6 +469,6 @@ abstract class _TMDBMovieBasic implements TMDBMovie {
   String? get releaseDate;
   @override
   @JsonKey(ignore: true)
-  _$$_TMDBMovieBasicCopyWith<_$_TMDBMovieBasic> get copyWith =>
+  _$$TMDBMovieBasicImplCopyWith<_$TMDBMovieBasicImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
