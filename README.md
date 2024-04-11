@@ -62,7 +62,7 @@ TMDB_KEY=your-api-key
 Then, run the code generator:
 
 ```
-flutter pub run build_runner build --delete-conflicting-outputs
+dart pub run build_runner build -d
 ```
 
 This will generate a `env.g.dart` file inside `lib/env`. This contains the `tmdbApiKey` that is used when making requests to the TMDB API.
