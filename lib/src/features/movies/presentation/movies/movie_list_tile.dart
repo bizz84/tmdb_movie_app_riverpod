@@ -53,11 +53,14 @@ class MovieListTile extends StatelessWidget {
               children: [
                 Text(
                   movie.title,
-                  style: Theme.of(context).textTheme.titleLarge,
+                  style: Theme.of(context).textTheme.titleMedium,
                 ),
                 if (movie.releaseDate != null) ...[
                   const SizedBox(height: 8),
-                  Text('Released: ${movie.releaseDate}'),
+                  Text(
+                    'Released: ${movie.releaseDate}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 ],
               ],
             ),
