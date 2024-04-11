@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -16,7 +17,7 @@ class MoviesRepository {
   final Dio client;
   final String apiKey;
 
-  Future<List<TMDBMovie>> searchMovies(
+  Future<TMDBMoviesResponse> searchMovies(
       {required int page, String query = '', CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
@@ -30,11 +31,10 @@ class MoviesRepository {
       },
     ).toString();
     final response = await client.get(url, cancelToken: cancelToken);
-    final movies = TMDBMoviesResponse.fromJson(response.data);
-    return movies.results;
+    return TMDBMoviesResponse.fromJson(response.data);
   }
 
-  Future<List<TMDBMovie>> nowPlayingMovies(
+  Future<TMDBMoviesResponse> nowPlayingMovies(
       {required int page, CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
@@ -47,8 +47,7 @@ class MoviesRepository {
       },
     ).toString();
     final response = await client.get(url, cancelToken: cancelToken);
-    final movies = TMDBMoviesResponse.fromJson(response.data);
-    return movies.results;
+    return TMDBMoviesResponse.fromJson(response.data);
   }
 
   Future<TMDBMovie> movie(
@@ -89,7 +88,7 @@ Future<TMDBMovie> movie(
 
 /// Provider to fetch paginated movies data
 @riverpod
-Future<List<TMDBMovie>> fetchMovies(
+Future<TMDBMoviesResponse> fetchMovies(
   FetchMoviesRef ref, {
   required MoviesPagination pagination,
 }) async {
