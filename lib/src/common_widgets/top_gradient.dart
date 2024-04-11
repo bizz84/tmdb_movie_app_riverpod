@@ -14,7 +14,7 @@ class TopGradient extends StatelessWidget {
             Colors.black87,
             Colors.transparent,
           ],
-          stops: [0.0, 0.3],
+          stops: [0.1, 0.5],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           tileMode: TileMode.repeated,

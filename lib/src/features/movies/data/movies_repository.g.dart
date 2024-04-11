@@ -181,7 +181,7 @@ class _MovieProviderElement extends AutoDisposeFutureProviderElement<TMDBMovie>
   int get movieId => (origin as MovieProvider).movieId;
 }
 
-String _$fetchMoviesHash() => r'cd39a67f8cc6a104d1058189f2151834a8eac1d0';
+String _$fetchMoviesHash() => r'9cafe6c21952cfb7d9bb9bfdec887cc3c13a9886';
 
 /// Provider to fetch paginated movies data
 ///
@@ -192,7 +192,7 @@ const fetchMoviesProvider = FetchMoviesFamily();
 /// Provider to fetch paginated movies data
 ///
 /// Copied from [fetchMovies].
-class FetchMoviesFamily extends Family<AsyncValue<List<TMDBMovie>>> {
+class FetchMoviesFamily extends Family<AsyncValue<TMDBMoviesResponse>> {
   /// Provider to fetch paginated movies data
   ///
   /// Copied from [fetchMovies].
@@ -236,7 +236,8 @@ class FetchMoviesFamily extends Family<AsyncValue<List<TMDBMovie>>> {
 /// Provider to fetch paginated movies data
 ///
 /// Copied from [fetchMovies].
-class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
+class FetchMoviesProvider
+    extends AutoDisposeFutureProvider<TMDBMoviesResponse> {
   /// Provider to fetch paginated movies data
   ///
   /// Copied from [fetchMovies].
@@ -273,7 +274,7 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
 
   @override
   Override overrideWith(
-    FutureOr<List<TMDBMovie>> Function(FetchMoviesRef provider) create,
+    FutureOr<TMDBMoviesResponse> Function(FetchMoviesRef provider) create,
   ) {
     return ProviderOverride(
       origin: this,
@@ -290,7 +291,7 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
   }
 
   @override
-  AutoDisposeFutureProviderElement<List<TMDBMovie>> createElement() {
+  AutoDisposeFutureProviderElement<TMDBMoviesResponse> createElement() {
     return _FetchMoviesProviderElement(this);
   }
 
@@ -308,13 +309,13 @@ class FetchMoviesProvider extends AutoDisposeFutureProvider<List<TMDBMovie>> {
   }
 }
 
-mixin FetchMoviesRef on AutoDisposeFutureProviderRef<List<TMDBMovie>> {
+mixin FetchMoviesRef on AutoDisposeFutureProviderRef<TMDBMoviesResponse> {
   /// The parameter `pagination` of this provider.
   MoviesPagination get pagination;
 }
 
 class _FetchMoviesProviderElement
-    extends AutoDisposeFutureProviderElement<List<TMDBMovie>>
+    extends AutoDisposeFutureProviderElement<TMDBMoviesResponse>
     with FetchMoviesRef {
   _FetchMoviesProviderElement(super.provider);
 

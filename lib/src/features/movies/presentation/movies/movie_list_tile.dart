@@ -15,6 +15,8 @@ class MovieListTile extends StatelessWidget {
   final int? debugIndex;
   final VoidCallback? onPressed;
 
+  static const posterHeight = 80.0;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -26,15 +28,15 @@ class MovieListTile extends StatelessWidget {
             child: Stack(
               children: [
                 SizedBox(
-                  width: MoviePoster.width,
-                  height: MoviePoster.height,
+                  width: posterHeight * MoviePoster.width / MoviePoster.height,
+                  height: posterHeight,
                   child: MoviePoster(imagePath: movie.posterPath),
                 ),
                 if (debugIndex != null) ...[
                   const Positioned.fill(child: TopGradient()),
                   Positioned(
-                    left: 8,
-                    top: 8,
+                    left: 4,
+                    top: 4,
                     child: Text(
                       '$debugIndex',
                       style: const TextStyle(color: Colors.white, fontSize: 14),
