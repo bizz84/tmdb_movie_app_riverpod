@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-// StateProvider that can be watched by other widgets to obtain the
-// current search query.
-final moviesSearchTextProvider = StateProvider<String>((ref) {
-  return '';
-});
+part 'movies_search_bar.g.dart';
+
+/// Notifier that can be watched to obtain the current search query.
+@riverpod
+class MoviesSearchQueryNotifier extends _$MoviesSearchQueryNotifier {
+  @override
+  String build() {
+    // by default, return an empty query
+    return '';
+  }
+
+  void setQuery(String query) {
+    state = query;
+  }
+}
 
 class MoviesSearchBar extends ConsumerStatefulWidget {
   const MoviesSearchBar({super.key});
@@ -56,8 +67,8 @@ class _SearchBarState extends ConsumerState<MoviesSearchBar> {
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
                       onChanged: (text) => ref
-                          .read(moviesSearchTextProvider.notifier)
-                          .state = text,
+                          .read(moviesSearchQueryNotifierProvider.notifier)
+                          .setQuery(text),
                     ),
                   ),
                 ),

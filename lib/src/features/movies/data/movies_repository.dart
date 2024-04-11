@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tmdb_movie_app_riverpod/env/env.dart';
-import 'package:tmdb_movie_app_riverpod/src/features/movies/data/movies_pagination.dart';
 import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movie.dart';
 import 'package:tmdb_movie_app_riverpod/src/features/movies/domain/tmdb_movies_response.dart';
 import 'package:tmdb_movie_app_riverpod/src/utils/cancel_token_ref.dart';
@@ -10,13 +9,16 @@ import 'package:tmdb_movie_app_riverpod/src/utils/dio_provider.dart';
 
 part 'movies_repository.g.dart';
 
+/// Metadata used when fetching movies with the paginated search API.
+typedef MoviesPagination = ({String query, int page});
+
 class MoviesRepository {
-  MoviesRepository({required this.client, required this.apiKey});
+  const MoviesRepository({required this.client, required this.apiKey});
   final Dio client;
   final String apiKey;
 
   Future<TMDBMoviesResponse> searchMovies(
-      {required int page, String query = '', CancelToken? cancelToken}) async {
+      {required MoviesPagination pagination, CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
       host: 'api.themoviedb.org',
@@ -24,8 +26,8 @@ class MoviesRepository {
       queryParameters: {
         'api_key': apiKey,
         'include_adult': 'false',
-        'page': '$page',
-        'query': query,
+        'page': '${pagination.page}',
+        'query': pagination.query,
       },
     ).toString();
     final response = await client.get(url, cancelToken: cancelToken);
@@ -131,8 +133,7 @@ Future<TMDBMoviesResponse> fetchMovies(
     if (cancelToken.isCancelled) throw AbortedException();
     // use search endpoint
     return moviesRepo.searchMovies(
-      page: pagination.page,
-      query: pagination.query,
+      pagination: pagination,
       cancelToken: cancelToken,
     );
   }
