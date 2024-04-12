@@ -19,7 +19,7 @@ class MoviesRepository {
 
   Future<TMDBMoviesResponse> searchMovies(
       {required MoviesQueryData queryData, CancelToken? cancelToken}) async {
-    final url = Uri(
+    final uri = Uri(
       scheme: 'https',
       host: 'api.themoviedb.org',
       path: '3/search/movie',
@@ -29,14 +29,14 @@ class MoviesRepository {
         'page': '${queryData.page}',
         'query': queryData.query,
       },
-    ).toString();
-    final response = await client.get(url, cancelToken: cancelToken);
+    );
+    final response = await client.getUri(uri, cancelToken: cancelToken);
     return TMDBMoviesResponse.fromJson(response.data);
   }
 
   Future<TMDBMoviesResponse> nowPlayingMovies(
       {required int page, CancelToken? cancelToken}) async {
-    final url = Uri(
+    final uri = Uri(
       scheme: 'https',
       host: 'api.themoviedb.org',
       path: '3/movie/now_playing',
@@ -45,8 +45,8 @@ class MoviesRepository {
         'include_adult': 'false',
         'page': '$page',
       },
-    ).toString();
-    final response = await client.get(url, cancelToken: cancelToken);
+    );
+    final response = await client.getUri(uri, cancelToken: cancelToken);
     return TMDBMoviesResponse.fromJson(response.data);
   }
 
