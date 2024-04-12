@@ -127,10 +127,6 @@ Future<TMDBMoviesResponse> fetchMovies(
       cancelToken: cancelToken,
     );
   } else {
-    // Debounce the request. By having this delay, consumers can subscribe to
-    // different parameters. In which case, this request will be aborted.
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (cancelToken.isCancelled) throw AbortedException();
     // use search endpoint
     return moviesRepo.searchMovies(
       queryData: queryData,

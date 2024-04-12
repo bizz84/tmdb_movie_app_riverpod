@@ -181,7 +181,7 @@ class _MovieProviderElement extends AutoDisposeFutureProviderElement<TMDBMovie>
   int get movieId => (origin as MovieProvider).movieId;
 }
 
-String _$fetchMoviesHash() => r'd42ea205e64124a9a9de14afbfdc6f47106334cc';
+String _$fetchMoviesHash() => r'1635ab7e809adc3cfcc0a11a49405eaa429a390f';
 
 /// Provider to fetch paginated movies data
 ///
