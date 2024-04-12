@@ -18,6 +18,10 @@ This is not meant to be a complete movies app, yet it should implement common us
 - Loading UI with the [Shimmer](https://pub.dev/packages/shimmer) package
 - Stateful nested routing with [`StatefulShellRoute`](https://pub.dev/documentation/go_router/latest/go_router/StatefulShellRoute-class.html)
 
+Here's a detailed tutorial explaining how the pagination and search UI works:
+
+- [Flutter Pagination with Riverpod: The Ultimate Guide](https://codewithandrea.com/articles/flutter-riverpod-pagination/)
+
 ## Planned Features (no promises 😅)
 
 - Favourites
