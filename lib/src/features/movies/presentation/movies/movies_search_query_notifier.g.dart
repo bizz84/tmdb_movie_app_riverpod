@@ -1,15 +1,15 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'movies_search_bar.dart';
+part of 'movies_search_query_notifier.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
 String _$moviesSearchQueryNotifierHash() =>
-    r'a134a9096c00cf385f45da7a6a16589c76c017ad';
+    r'e5feb3e8f1c81a63519db4e67c615c169b380710';
 
-/// Notifier that can be watched to obtain the current search query.
+/// A notifier class to keep track of the search query (with debouncing)
 ///
 /// Copied from [MoviesSearchQueryNotifier].
 @ProviderFor(MoviesSearchQueryNotifier)

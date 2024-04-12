@@ -181,7 +181,7 @@ class _MovieProviderElement extends AutoDisposeFutureProviderElement<TMDBMovie>
   int get movieId => (origin as MovieProvider).movieId;
 }
 
-String _$fetchMoviesHash() => r'e522dc1c22ffbf0c195b263646b5cb400ca1cd6a';
+String _$fetchMoviesHash() => r'1635ab7e809adc3cfcc0a11a49405eaa429a390f';
 
 /// Provider to fetch paginated movies data
 ///
@@ -202,10 +202,10 @@ class FetchMoviesFamily extends Family<AsyncValue<TMDBMoviesResponse>> {
   ///
   /// Copied from [fetchMovies].
   FetchMoviesProvider call({
-    required ({int page, String query}) pagination,
+    required ({int page, String query}) queryData,
   }) {
     return FetchMoviesProvider(
-      pagination: pagination,
+      queryData: queryData,
     );
   }
 
@@ -214,7 +214,7 @@ class FetchMoviesFamily extends Family<AsyncValue<TMDBMoviesResponse>> {
     covariant FetchMoviesProvider provider,
   ) {
     return call(
-      pagination: provider.pagination,
+      queryData: provider.queryData,
     );
   }
 
@@ -242,11 +242,11 @@ class FetchMoviesProvider
   ///
   /// Copied from [fetchMovies].
   FetchMoviesProvider({
-    required ({int page, String query}) pagination,
+    required ({int page, String query}) queryData,
   }) : this._internal(
           (ref) => fetchMovies(
             ref as FetchMoviesRef,
-            pagination: pagination,
+            queryData: queryData,
           ),
           from: fetchMoviesProvider,
           name: r'fetchMoviesProvider',
@@ -257,7 +257,7 @@ class FetchMoviesProvider
           dependencies: FetchMoviesFamily._dependencies,
           allTransitiveDependencies:
               FetchMoviesFamily._allTransitiveDependencies,
-          pagination: pagination,
+          queryData: queryData,
         );
 
   FetchMoviesProvider._internal(
@@ -267,10 +267,10 @@ class FetchMoviesProvider
     required super.allTransitiveDependencies,
     required super.debugGetCreateSourceHash,
     required super.from,
-    required this.pagination,
+    required this.queryData,
   }) : super.internal();
 
-  final ({int page, String query}) pagination;
+  final ({int page, String query}) queryData;
 
   @override
   Override overrideWith(
@@ -285,7 +285,7 @@ class FetchMoviesProvider
         dependencies: null,
         allTransitiveDependencies: null,
         debugGetCreateSourceHash: null,
-        pagination: pagination,
+        queryData: queryData,
       ),
     );
   }
@@ -297,21 +297,21 @@ class FetchMoviesProvider
 
   @override
   bool operator ==(Object other) {
-    return other is FetchMoviesProvider && other.pagination == pagination;
+    return other is FetchMoviesProvider && other.queryData == queryData;
   }
 
   @override
   int get hashCode {
     var hash = _SystemHash.combine(0, runtimeType.hashCode);
-    hash = _SystemHash.combine(hash, pagination.hashCode);
+    hash = _SystemHash.combine(hash, queryData.hashCode);
 
     return _SystemHash.finish(hash);
   }
 }
 
 mixin FetchMoviesRef on AutoDisposeFutureProviderRef<TMDBMoviesResponse> {
-  /// The parameter `pagination` of this provider.
-  ({int page, String query}) get pagination;
+  /// The parameter `queryData` of this provider.
+  ({int page, String query}) get queryData;
 }
 
 class _FetchMoviesProviderElement
@@ -320,8 +320,8 @@ class _FetchMoviesProviderElement
   _FetchMoviesProviderElement(super.provider);
 
   @override
-  ({int page, String query}) get pagination =>
-      (origin as FetchMoviesProvider).pagination;
+  ({int page, String query}) get queryData =>
+      (origin as FetchMoviesProvider).queryData;
 }
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

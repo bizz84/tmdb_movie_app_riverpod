@@ -1,22 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
-
-part 'movies_search_bar.g.dart';
-
-/// Notifier that can be watched to obtain the current search query.
-@riverpod
-class MoviesSearchQueryNotifier extends _$MoviesSearchQueryNotifier {
-  @override
-  String build() {
-    // by default, return an empty query
-    return '';
-  }
-
-  void setQuery(String query) {
-    state = query;
-  }
-}
+import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movies_search_query_notifier.dart';
 
 class MoviesSearchBar extends ConsumerStatefulWidget {
   const MoviesSearchBar({super.key});

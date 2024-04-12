@@ -10,7 +10,7 @@ import 'package:tmdb_movie_app_riverpod/src/utils/dio_provider.dart';
 part 'movies_repository.g.dart';
 
 /// Metadata used when fetching movies with the paginated search API.
-typedef MoviesPagination = ({String query, int page});
+typedef MoviesQueryData = ({String query, int page});
 
 class MoviesRepository {
   const MoviesRepository({required this.client, required this.apiKey});
@@ -18,25 +18,25 @@ class MoviesRepository {
   final String apiKey;
 
   Future<TMDBMoviesResponse> searchMovies(
-      {required MoviesPagination pagination, CancelToken? cancelToken}) async {
-    final url = Uri(
+      {required MoviesQueryData queryData, CancelToken? cancelToken}) async {
+    final uri = Uri(
       scheme: 'https',
       host: 'api.themoviedb.org',
       path: '3/search/movie',
       queryParameters: {
         'api_key': apiKey,
         'include_adult': 'false',
-        'page': '${pagination.page}',
-        'query': pagination.query,
+        'page': '${queryData.page}',
+        'query': queryData.query,
       },
-    ).toString();
-    final response = await client.get(url, cancelToken: cancelToken);
+    );
+    final response = await client.getUri(uri, cancelToken: cancelToken);
     return TMDBMoviesResponse.fromJson(response.data);
   }
 
   Future<TMDBMoviesResponse> nowPlayingMovies(
       {required int page, CancelToken? cancelToken}) async {
-    final url = Uri(
+    final uri = Uri(
       scheme: 'https',
       host: 'api.themoviedb.org',
       path: '3/movie/now_playing',
@@ -45,8 +45,8 @@ class MoviesRepository {
         'include_adult': 'false',
         'page': '$page',
       },
-    ).toString();
-    final response = await client.get(url, cancelToken: cancelToken);
+    );
+    final response = await client.getUri(uri, cancelToken: cancelToken);
     return TMDBMoviesResponse.fromJson(response.data);
   }
 
@@ -90,7 +90,7 @@ Future<TMDBMovie> movie(
 @riverpod
 Future<TMDBMoviesResponse> fetchMovies(
   FetchMoviesRef ref, {
-  required MoviesPagination pagination,
+  required MoviesQueryData queryData,
 }) async {
   final moviesRepo = ref.watch(moviesRepositoryProvider);
   // See this for how the timeout is implemented:
@@ -120,20 +120,16 @@ Future<TMDBMoviesResponse> fetchMovies(
   ref.onResume(() {
     timer?.cancel();
   });
-  if (pagination.query.isEmpty) {
+  if (queryData.query.isEmpty) {
     // use non-search endpoint
     return moviesRepo.nowPlayingMovies(
-      page: pagination.page,
+      page: queryData.page,
       cancelToken: cancelToken,
     );
   } else {
-    // Debounce the request. By having this delay, consumers can subscribe to
-    // different parameters. In which case, this request will be aborted.
-    await Future.delayed(const Duration(milliseconds: 500));
-    if (cancelToken.isCancelled) throw AbortedException();
     // use search endpoint
     return moviesRepo.searchMovies(
-      pagination: pagination,
+      queryData: queryData,
       cancelToken: cancelToken,
     );
   }
