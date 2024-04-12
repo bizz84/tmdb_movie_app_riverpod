@@ -57,6 +57,7 @@ class MoviesSearchScreen extends ConsumerWidget {
                       page: page,
                       indexInPage: indexInPage,
                       error: err.toString(),
+                      isLoading: responseAsync.isLoading,
                     ),
                     loading: () => const MovieListTileShimmer(),
                     data: (response) {
@@ -93,11 +94,13 @@ class MovieListTileError extends ConsumerWidget {
     required this.query,
     required this.page,
     required this.indexInPage,
+    required this.isLoading,
     required this.error,
   });
   final String query;
   final int page;
   final int indexInPage;
+  final bool isLoading;
   final String error;
 
   @override
@@ -111,16 +114,18 @@ class MovieListTileError extends ConsumerWidget {
               children: [
                 Text(error),
                 ElevatedButton(
-                  onPressed: () {
-                    // dispose all the pages previously fetched. Next read will refresh them
-                    ref.invalidate(fetchMoviesProvider(
-                        queryData: (page: page, query: query)));
-                    // keep showing the progress indicator until the first page is fetched
-                    return ref.read(
-                      fetchMoviesProvider(queryData: (page: page, query: query))
-                          .future,
-                    );
-                  },
+                  onPressed: isLoading
+                      ? null
+                      : () {
+                          // dispose all the pages previously fetched. Next read will refresh them
+                          ref.invalidate(fetchMoviesProvider(
+                              queryData: (page: page, query: query)));
+                          // keep showing the progress indicator until the first page is fetched
+                          return ref.read(
+                            fetchMoviesProvider(
+                                queryData: (page: page, query: query)).future,
+                          );
+                        },
                   child: const Text('Retry'),
                 ),
               ],
