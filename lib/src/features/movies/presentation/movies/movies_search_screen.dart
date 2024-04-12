@@ -28,16 +28,23 @@ class MoviesSearchScreen extends ConsumerWidget {
           const MoviesSearchBar(),
           Expanded(
             child: RefreshIndicator(
-              onRefresh: () {
+              onRefresh: () async {
                 // dispose all the pages previously fetched. Next read will refresh them
                 ref.invalidate(fetchMoviesProvider);
                 // keep showing the progress indicator until the first page is fetched
-                return ref.read(
-                  fetchMoviesProvider(queryData: (page: 1, query: query))
-                      .future,
-                );
+                try {
+                  await ref.read(
+                    fetchMoviesProvider(queryData: (page: 1, query: query))
+                        .future,
+                  );
+                } catch (e) {
+                  // fail silently as the provider error state is handled inside the ListView
+                }
               },
               child: ListView.builder(
+                // use a different key for each query, ensuring the scroll
+                // position is reset when the query and results change
+                key: ValueKey(query),
                 // * pass the itemCount explicitly to prevent unnecessary renders
                 // * during overscroll
                 itemCount: totalResults,
@@ -69,7 +76,7 @@ class MoviesSearchScreen extends ConsumerWidget {
                       final movie = response.results[indexInPage];
                       return MovieListTile(
                         movie: movie,
-                        debugIndex: index,
+                        debugIndex: index + 1,
                         onPressed: () => context.goNamed(
                           AppRoute.movie.name,
                           pathParameters: {'id': movie.id.toString()},
@@ -117,10 +124,10 @@ class MovieListTileError extends ConsumerWidget {
                   onPressed: isLoading
                       ? null
                       : () {
-                          // dispose all the pages previously fetched. Next read will refresh them
+                          // invalidate the provider for the errored page
                           ref.invalidate(fetchMoviesProvider(
                               queryData: (page: page, query: query)));
-                          // keep showing the progress indicator until the first page is fetched
+                          // wait until the page is loaded again
                           return ref.read(
                             fetchMoviesProvider(
                                 queryData: (page: page, query: query)).future,
