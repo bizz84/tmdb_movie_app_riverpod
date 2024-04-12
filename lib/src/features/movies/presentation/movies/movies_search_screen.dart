@@ -5,6 +5,7 @@ import 'package:tmdb_movie_app_riverpod/src/features/movies/data/movies_reposito
 import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movie_list_tile.dart';
 import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movie_list_tile_shimmer.dart';
 import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movies_search_bar.dart';
+import 'package:tmdb_movie_app_riverpod/src/features/movies/presentation/movies/movies_search_query_notifier.dart';
 import 'package:tmdb_movie_app_riverpod/src/routing/app_router.dart';
 
 class MoviesSearchScreen extends ConsumerWidget {
@@ -17,13 +18,11 @@ class MoviesSearchScreen extends ConsumerWidget {
     final query = ref.watch(moviesSearchQueryNotifierProvider);
     // * get the first page so we can retrieve the total number of results
     final responseAsync = ref.watch(
-      fetchMoviesProvider(pagination: (page: 1, query: query)),
+      fetchMoviesProvider(queryData: (page: 1, query: query)),
     );
     final totalResults = responseAsync.valueOrNull?.totalResults;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('TMDB Movies'),
-      ),
+      appBar: AppBar(title: const Text('TMDB Movies')),
       body: Column(
         children: [
           const MoviesSearchBar(),
@@ -34,9 +33,8 @@ class MoviesSearchScreen extends ConsumerWidget {
                 ref.invalidate(fetchMoviesProvider);
                 // keep showing the progress indicator until the first page is fetched
                 return ref.read(
-                  fetchMoviesProvider(
-                    pagination: (page: 1, query: query),
-                  ).future,
+                  fetchMoviesProvider(queryData: (page: 1, query: query))
+                      .future,
                 );
               },
               child: ListView.builder(
@@ -51,16 +49,15 @@ class MoviesSearchScreen extends ConsumerWidget {
                   // Note that ref.watch is called for up to pageSize items
                   // with the same page and query arguments (but this is ok since data is cached)
                   final responseAsync = ref.watch(
-                    fetchMoviesProvider(pagination: (page: page, query: query)),
+                    fetchMoviesProvider(queryData: (page: page, query: query)),
                   );
                   return responseAsync.when(
-                    // * Only show error on the first item of the page
-                    error: (err, stack) => indexInPage == 0
-                        ? Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Text(err.toString()),
-                          )
-                        : const SizedBox.shrink(),
+                    error: (err, stack) => MovieListTileError(
+                      query: query,
+                      page: page,
+                      indexInPage: indexInPage,
+                      error: err.toString(),
+                    ),
                     loading: () => const MovieListTileShimmer(),
                     data: (response) {
                       //log('index: $index, page: $page, indexInPage: $indexInPage, len: ${response.results.length}');
@@ -87,5 +84,48 @@ class MoviesSearchScreen extends ConsumerWidget {
         ],
       ),
     );
+  }
+}
+
+class MovieListTileError extends ConsumerWidget {
+  const MovieListTileError({
+    super.key,
+    required this.query,
+    required this.page,
+    required this.indexInPage,
+    required this.error,
+  });
+  final String query;
+  final int page;
+  final int indexInPage;
+  final String error;
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    // * Only show error on the first item of the page
+    return indexInPage == 0
+        ? Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(error),
+                ElevatedButton(
+                  onPressed: () {
+                    // dispose all the pages previously fetched. Next read will refresh them
+                    ref.invalidate(fetchMoviesProvider(
+                        queryData: (page: page, query: query)));
+                    // keep showing the progress indicator until the first page is fetched
+                    return ref.read(
+                      fetchMoviesProvider(queryData: (page: page, query: query))
+                          .future,
+                    );
+                  },
+                  child: const Text('Retry'),
+                ),
+              ],
+            ),
+          )
+        : const SizedBox.shrink();
   }
 }

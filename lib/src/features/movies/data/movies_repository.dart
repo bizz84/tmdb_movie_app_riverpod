@@ -10,7 +10,7 @@ import 'package:tmdb_movie_app_riverpod/src/utils/dio_provider.dart';
 part 'movies_repository.g.dart';
 
 /// Metadata used when fetching movies with the paginated search API.
-typedef MoviesPagination = ({String query, int page});
+typedef MoviesQueryData = ({String query, int page});
 
 class MoviesRepository {
   const MoviesRepository({required this.client, required this.apiKey});
@@ -18,7 +18,7 @@ class MoviesRepository {
   final String apiKey;
 
   Future<TMDBMoviesResponse> searchMovies(
-      {required MoviesPagination pagination, CancelToken? cancelToken}) async {
+      {required MoviesQueryData queryData, CancelToken? cancelToken}) async {
     final url = Uri(
       scheme: 'https',
       host: 'api.themoviedb.org',
@@ -26,8 +26,8 @@ class MoviesRepository {
       queryParameters: {
         'api_key': apiKey,
         'include_adult': 'false',
-        'page': '${pagination.page}',
-        'query': pagination.query,
+        'page': '${queryData.page}',
+        'query': queryData.query,
       },
     ).toString();
     final response = await client.get(url, cancelToken: cancelToken);
@@ -90,7 +90,7 @@ Future<TMDBMovie> movie(
 @riverpod
 Future<TMDBMoviesResponse> fetchMovies(
   FetchMoviesRef ref, {
-  required MoviesPagination pagination,
+  required MoviesQueryData queryData,
 }) async {
   final moviesRepo = ref.watch(moviesRepositoryProvider);
   // See this for how the timeout is implemented:
@@ -120,10 +120,10 @@ Future<TMDBMoviesResponse> fetchMovies(
   ref.onResume(() {
     timer?.cancel();
   });
-  if (pagination.query.isEmpty) {
+  if (queryData.query.isEmpty) {
     // use non-search endpoint
     return moviesRepo.nowPlayingMovies(
-      page: pagination.page,
+      page: queryData.page,
       cancelToken: cancelToken,
     );
   } else {
@@ -133,7 +133,7 @@ Future<TMDBMoviesResponse> fetchMovies(
     if (cancelToken.isCancelled) throw AbortedException();
     // use search endpoint
     return moviesRepo.searchMovies(
-      pagination: pagination,
+      queryData: queryData,
       cancelToken: cancelToken,
     );
   }
