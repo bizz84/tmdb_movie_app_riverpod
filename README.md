@@ -50,11 +50,11 @@ It also uses the new [Riverpod Generator](https://pub.dev/packages/riverpod_gene
 
 - [How to Auto-Generate your Providers with Flutter Riverpod Generator](https://codewithandrea.com/articles/flutter-riverpod-generator/)
 
-## Getting a TMDB API key
+## Getting a TMDB API Key and Running the Project
 
 This project uses the TMDB API to get the latest movies data.
 
-Before running the app you need to [sign up on the TMDB website](https://www.themoviedb.org/signup), then obtain an API key on the [settings API page](https://www.themoviedb.org/settings/api).
+Before running the app, you need to [sign up on the TMDB website](https://www.themoviedb.org/signup), then obtain an API key on the [settings API page](https://www.themoviedb.org/settings/api).
 
 Once you have this, create an `.env` file **at the root of the project** and add your key:
 
@@ -66,7 +66,7 @@ TMDB_KEY=your-api-key
 Then, run the code generator:
 
 ```
-dart pub run build_runner build -d
+dart run build_runner build -d
 ```
 
 This will generate a `env.g.dart` file inside `lib/env`. This contains the `tmdbApiKey` that is used when making requests to the TMDB API.
@@ -75,7 +75,7 @@ Congratulations, you're good to go. 😎
 
 ## Note: Loading images from insecure HTTP endpoints
 
-The data returned by the TMBD API points to image URLs using http rather than https. In order for images to load correctly, the following changes have been made:
+The data returned by the TMBD API points to image URLs using http rather than https. For the images to load correctly, the following changes have been made:
 
 ### Android
 
