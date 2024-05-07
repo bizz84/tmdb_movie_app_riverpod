@@ -1,0 +1,5 @@
+*.config.dart -diff
+*.freezed.dart -diff
+*.g.dart  -diff
+*.gen.dart -diff
+*.gr.dart  -diff
