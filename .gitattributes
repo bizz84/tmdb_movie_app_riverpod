@@ -1,0 +1,6 @@
+# https://docs.github.com/en/repositories/working-with-files/managing-files/customizing-how-changed-files-appear-on-github
+*.config.dart linguist-generated=true
+*.freezed.dart linguist-generated=true
+*.g.dart linguist-generated=true
+*.gen.dart linguist-generated=true
+*.gr.dart linguist-generated=true

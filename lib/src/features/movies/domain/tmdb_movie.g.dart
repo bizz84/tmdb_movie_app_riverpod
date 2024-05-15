@@ -8,7 +8,7 @@ part of 'tmdb_movie.dart';
 
 _$TMDBMovieBasicImpl _$$TMDBMovieBasicImplFromJson(Map<String, dynamic> json) =>
     _$TMDBMovieBasicImpl(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       posterPath: json['poster_path'] as String?,
       releaseDate: json['release_date'] as String?,
